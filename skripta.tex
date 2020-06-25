@@ -62,13 +62,14 @@
             \par
             Kaj nas zanima? Zanima nas, kako bomo razporedili različne pridelke po pridelovalni površini za najvecji dobiček.
 
-            \par
-            \(x_1\) . . . površina pšenice v \(ha\)
-            \newline
-            \(x_2\) . . . površina koruze v \(ha\)
-            \newline
-            \(x_3\) . . . površina krompirja v \(ha\)
-            \newline
+            
+            \begin{tabular}{ c c c }
+                \(x_1\) & . . . & površina pšenice v \(ha\) \\
+                \(x_2\) & . . . & površina koruze v \(ha\) \\
+                \(x_3\) & . . . & površina krompirja v \(ha\) \\
+            \end{tabular}
+            
+            
             
             Problem kmetije lahko matematično izrazimo takole: \\
 
@@ -142,16 +143,16 @@
     \par
     Optimizacijski problem je:
     \begin{itemize}
-        \item Nedopusten, ce \(\Omega = \emptyset\),
-        \item Dopusten, ce je \(\Omega \neq \emptyset\)
+        \item Nedopusten, če \(\Omega = \emptyset\),
+        \item Dopusten, če je \(\Omega \neq \emptyset\)
         
     \end{itemize}
 
     \par
     Dopustne probleme delimo na:
     \begin{itemize}
-        \item Neomejen, ce je \(\Omega\) neomejena, torej lahko vedno najdemo boljšo rešitev,
-        \item Omejen, ce je \(\Omega\) omejena
+        \item Neomejen, če je \(\Omega\) neomejena, torej lahko vedno najdemo boljšo rešitev,
+        \item Omejen, če je \(\Omega\) omejena
         
     \end{itemize}
 
@@ -546,12 +547,11 @@
         \[z=v^* + \sum_{i=1}^{n+m} c_i^*x_i\]
         \[v^* = \sum_{i=1}^{n} c_i x_i^*\]
         \(c_i^*=0\), če je \(x_i\) bazna spremenljivka in \(c_i^* \le 0\), če je \(x_i\) nebazna spremenljivka.
-        \begin{center}
-            \(y_i^* = -c_{i+n}\) za \(i=1,...,m\)
-        \end{center}
+        
+        Nastavimo \(y_i^* = -c_{i+n}^*\) za \(i=1,...,m\)
         
         \begin{proposition}
-            naj bo \((y_1^*,...,y_m^*)\) dopustna rešitev za \(P'\). Potem je \[\sum_{i=1}^n c_i c_i^* = \sum_{i=1}^m\]
+            Naj bo \((y_1^*,...,y_m^*)\) dopustna rešitev za \(P'\). Potem je \[\sum_{i=1}^n c_i x_i^* = \sum_{i=1}^m b_i y_i^*\]
         \end{proposition}
 
         Če dokažemo to trditev, sta po posledici \ref{optimalnost} \(x^*\) in \(y^*\) optimalni.
@@ -560,26 +560,114 @@
         
         \[z = v^* + \sum_{i=1}^n c_i^* x_i + \sum_{i=1}^m c_{i+n} x_{i+n}\]
        
+        
+        V naslednjem koraku uporabimo sledeči enačbi:
+        
         \begin{center}
-            \(c_{i+n}^* = -y_i^*\) in \(x_{i+n} = b_i - \sum_{j=1}^n a+{ij} x_j\)
+            \begin{tabular}{ c c c }
+                \(c_{i+n}^* = -y_i^*\) & in & \(x_{i+n} = b_i - \sum_{j=1}^n a_{ij} x_j\)
+            \end{tabular}
         \end{center}
+
+        Prvo enačbo smo dobili iz nastavka za \(y^*\), druga pa je enačba za dopolnilno spremenljivko.
+            
         
         \[z = v^* +\sum_{i=1}^n c_i^* x_i + \sum_{j=1}^m (-y_j^*)(b_j - \sum_{i=1}^n a_{ji} x_i)\]
         
         \[z = (v^* - \sum_{j=1}^m y_j^* b_j) + \sum_{i=1}^n x_i (c_i^* + \sum_{j=1}^m a_{ji} y_j^*)\]
 
         Po drugi strani pa je \(z = \sum_{i=1}^n c_i x_i\). Iz tega sledi:
-        \[v^* - \sum_{j=1}^m y_i^* b_j = 0\]
+        \[v^* - \sum_{j=1}^m b_j y_j^* = 0\]
         \[c_i^* + \sum_{j=1}^m a_{ij} y_j^* = c_i\]
 
         Ker je \(c_i^* \le 0\) in \(y_i^* = -c_{i+n}^*\), je \(y_i^* = -c_{i+n}^* \ge 0\). Iz tega sledi, da je \(y^*\) dopustna rešitev:
 
         \[\sum_{j=1}^m a_{ji} y_j^* \ge c_i\]
-        \[y_1^*,y_2^*...,y_m^* \ge 0\]
+        \[y_1^*,...,y_m^* \ge 0\]
 
-        Iz \(v^* - \sum_{j=1}^m y_i^* b_j = 0\) sledi tudi, da je 
-        \[v^* = \sum_{j=1}^m y_i^* b_j\]
+        Iz \(v^* - \sum_{j=1}^m b_j y_j^* = 0\) sledi, da je 
+        \(v^* = \sum_{j=1}^m b_j y_j^*\).
         Ker pa je \(v^* = \sum_{i=1}^{n} c_i x_i^*\), sledi 
         \[\sum_{j=1}^m a_{ji} y_j^* = \sum_{j=1}^m b_j y_i^*\].
+    \end{proof}
+
+    \begin{example}
+        \[
+            \begin{array}{ c c }
+                max & 3x_1-15x_2+4x_3 \\
+                p.p. & x_1+x_2+x_3 \le 50 \\
+                & 3x_1+4x_2-15x_3 \le 250 \\
+                & 10x_1+15x_2+12x_3 \le 600 \\
+                & x_1,x_2,x_3 \ge 0 \\
+            \end{array}
+        \]
+        
+        Zadnji slovar: \(z=200 - \frac{1}{3}x_1 - \frac{1}{3}x_6\); \(x_4,x_5,x_6\) so dopolnilne spremenljivke. \\
+
+        Kakšne so vrednosti dualne optimalne rešitve? \(y_j^*\) je enak koeficientu pri dodatni spremenljivki, ki pripada \(j\)-ti neenakosti. Iz podanega slovarja preberemo \(c_4^*=0,c_5^*=0,c_6^*=\frac{1}{3}\). Dualna optimalna rešitev je torej \({y^* = (0, 0, \frac{1}{3})}\).
+    \end{example}
+
+    V kakšni zvezi stav splošnem LP \(P\) in njegov dual \(P'\)?
+    \begin{proposition}
+        Za LP \(P\) in njegov dual \(P'\) velja natanko ena od možnosti:
+        \begin{enumerate}
+            \item oba sta optimalna
+            \item oba sta nedopustna
+            \item eden je neomejen, drugi pa nedopusten
+        \end{enumerate}
+    \end{proposition}
+
+    \begin{proof}
+        Po KID vemo, da je \(P\) optimalen natanko tedaj, ko je \(P'\) optimalen. \par
+        Po ŠID vemo:
+        \begin{itemize}
+            \item \(P\) neomejen \(\Rightarrow\) \(P'\) nedopusten
+            \item \(P'\) neomejen \(\Rightarrow\) \(P\) nedopusten
+        \end{itemize}
+    \end{proof}
+
+    
+    \begin{center}
+        \begin{tabular}{ c|c c c }
+            \(_P \backslash ^{P'}\) & nedopusten & neomejen & optimalen \\
+            \hline \\
+            nedopusten & \(\checkmark\) & \(\checkmark\) & \(\times\) \\
+            \hline \\
+            neomejen & \(\checkmark\) & \(\times\) & \(\times\) \\
+            \hline \\
+            optimalen & \(\times\) & \(\times\) & \(\checkmark\) \\
+        \end{tabular}
+        \captionof{table}{Tabela dopustnosti in optimalnosti dualnih LP}
+    \end{center}
+        
+
+    \begin{theorem}[Izrek o dualnem dopolnjevanju (DD)]
+        Naj bosta LP \(P,P'\) dualna problema ter \(x\) in \(y\) dopustni rešitvi za \(P\) in \(P'\). Potem sta \(x\) in \(y\) optimalna natanko tedaj, ko velja:
+        \begin{itemize}
+            \item \(\displaystyle \forall i=1,...,m: \sum_{j=1}^n a_{ij} x_j = b_i\) ali \(y_i=0\) 
+            \item in \(\displaystyle \forall j=1,...,n: \sum_{i=1}^m a_{ij} y_j = c_j\) ali \(x_j=0\)
+        \end{itemize}
+
+        Ekvivalentno:
+        \begin{itemize}
+            \item \(\displaystyle \sum_{j=1}^n a_{ij} x_j < b_i \Rightarrow y_i = 0\)
+            \item \(\displaystyle x_j = 0 \Rightarrow \sum_{i=1}^m a_{ij} y_i = c_j\)
+        \end{itemize}
+    \end{theorem}
+
+    \begin{proof}
+        \[L = \sum_{j=1}^n c_j x_j \le \sum_{j=1}^n (\sum_{i=1}^m a_{ij} y_i)x_j = \sum_{i=1}^m (\sum_{j=1}^n a_{ij} x_j)y_i \le \sum_{i=1}^m b_i y_i = D\]
+
+        Prvo neenakost smo dobili z \(A^Ty \ge c\) in \(x \ge 0\), drugo pa z \(Ax \le b\) in \(y \ge 0\). KID pravi, da sta \(x,y\) optimalni natanko takrat, ko je \(L = D\), to je pa res natanko tedaj, ko velja:
+        \begin{itemize}
+            \item \(\displaystyle \forall j=1,...,m: c_j x_j = (\sum_{i=1}^m a_{ij} y_i)x_j\)
+            \item \(\displaystyle \forall i=1,...,n: (\sum_{j=1}^n a_{ij} x_j)y_i = b_i y_i\)
+        \end{itemize}
+
+        Izpostavimo \(x_j\) v prvi in \(y_i\) v drugi enačbi:
+        \begin{itemize}
+            \item \(\displaystyle \forall j=1,...,m: x_j(\sum_{i=1}^m a_{ij} y_i - c_j) = 0\)
+            \item \(\displaystyle \forall i=1,...,n: (\sum_{j=1}^n a_{ij} x_j - b_i)y_i = 0\)
+        \end{itemize}
     \end{proof}
 \end{document}
