@@ -1,0 +1,529 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage{mathtools}
+\usepackage{caption}
+\usepackage{float}
+\usepackage[slovene]{babel}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{enumitem}
+
+
+
+\hyphenpenalty=10000
+
+\begin{document}
+    \newtheorem{theorem}{Izrek}[section]
+    \newtheorem{definition}[theorem]{Definicija}
+    \newtheorem{corollary}[theorem]{Posledica}
+    \newtheorem{lemma}[theorem]{Lema}
+    \newtheorem*{remark}{Opomba}
+    \newtheorem{poroposition}[theorem]{Trditev}
+    \newtheorem{example}[theorem]{Zgled}
+
+
+    \title{Optimizacijske metode}
+    \author{Napisal Jure Pustoslemšek po zapiskih predavanj izr. prof. dr. Matjaža Konvalinke}
+    \date{Junij 2020}
+    \maketitle
+
+    \section{Optimizacijski problemi}
+
+    Hocemo maksimizirati ali minimizirati realno funkcijo, definirano na neki mnozici.
+
+        \begin{example}
+            Minimum/maksimum funkcije \(f(x)=x^2-2x+4\) na \([-2,2]\)
+            \par
+            Uporabimo odvod funkcije.
+        \end{example}
+
+        \begin{example}
+            Minimum/maksimum funkcije \(f(x,y)=x^2-y^2\) na \([-3,1]\times[0,2]\)
+            \par
+            Gledamo parcialne odvode in vrednosti funkcije na robu.
+        \end{example}
+
+        \begin{example}[Problem kmetije]
+            \par
+            Na kmetiji s \(50 ha\) pridelovalne površine želimo maksimizirati dobiček po spodnji tabeli
+
+            \begin{center}
+                \begin{tabular}{ c|c|c|c }
+                    pridelek & ure dela & stroski & dobiček \\
+                    \hline
+                    pšenica & 60 & 400 & 240 \\
+                    koruza & 80 & 600 & 400 \\
+                    krompir & 100 & 480 & 320 \\
+                \end{tabular}
+            \end{center}
+            
+            Na voljo imamo 5.000 ur delovne sile in 24.000€ kapitala.
+            
+            \par
+            Kaj nas zanima? Zanima nas, kako bomo razporedili različne pridelke po pridelovalni površini za najvecji dobiček.
+
+            \par
+            \(x_1\) . . . površina pšenice v \(ha\)
+            \newline
+            \(x_2\) . . . površina koruze v \(ha\)
+            \newline
+            \(x_3\) . . . površina krompirja v \(ha\)
+            \newline
+            
+            Problem kmetije lahko matematično izrazimo takole: \\
+
+            \begin{center}
+                \begin{tabular}{ cc }
+                    $max$ & \(
+                        240x_1+400x_2+320x_3
+                    \) \\
+                    $p.p.$ & \(
+                        x_1+x_2+x_3 \le 50
+                    \) \\
+                    & \(
+                        60x_1+80x_2+100x_3 \le 5.000
+                    \) \\
+                    & \(
+                        400x_1+600x_2+46x_3 \le 24.000
+                    \) \\
+                    & \(
+                        x_1,x_2,x_3 \ge 0    
+                    \) \\
+                \end{tabular}
+            \end{center}
+
+            To je \emph{linearni program (LP)}.
+        \end{example}
+
+        \begin{example}
+            Imamo \(2n\) jabolk, ki tehtajo \(w_1,...,w_{2n}\)
+            \par
+            Jabolka razvrstimo v dve košari tako, da je v vsaki \(n\) jabolk, in da sta teži kosar cim bolj podobni.
+
+            \par
+            Jabolka v 1. košari ponazorimo z množico A. Ker je v množici A natanko polovica jabolk, lahko 2. košaro ponazorimo z množico \(A^C\).
+
+            \par
+            Torej iščemo
+            \begin{center}
+                \[
+                    min |\sum_{w_i \in A}{w_i} - \sum_{w_i \in A^C}{w_i}|
+                \]
+            \end{center}
+            
+            \par
+            Poskusimo ta problem predstaviti kot LP: \\
+            \(x_i\); \(i \in [2n]\) \\
+            \(x_i = 1\), če damo \(i\)-to jabolko v levo košaro. \\
+            \(x_i = -1\), če damo \(i\)-to jabolko v desno košaro. \\
+
+            \begin{table}[h!]
+                \[
+                    \begin{array}{ cc }
+                        min &
+                            \displaystyle |\sum_{i=1}^{2n}{w_i x_i}| \\
+                        
+                        p.p. & 
+                            \displaystyle \sum_{i=1}^{2n}{x_i} = 0 \\
+                        &
+                            x_i \in \{-1, 1\} \\
+                    \end{array}
+                \]
+            \end{table}
+            
+            To \underline{ni} linearen program! Absolutna vrednost ni linearna.
+        \end{example}
+
+    \begin{definition}[Optimizacijski problem]
+        Optimizacijski problem karakteriziramo kot \((min/max, f, \Omega)\), kjer je \(f\) kriterijska funkcija (tj. funkcija, ki jo zelimo minimizirati oz. maksimizirati), \(\Omega\) pa množica dopustnih rešitev, tj. vseh \(x\), ki ustrezajo danim pogojem. 
+    \end{definition}
+    Zanima nas \underline{optimalna vrednost}, tj. \(x^* \in \Omega\), za katerega je \(f(x^*)\) največji oz. najmanjši mozen.
+
+    \par
+    Optimizacijski problem je:
+    \begin{itemize}
+        \item Nedopusten, ce \(\Omega = \emptyset\),
+        \item Dopusten, ce je \(\Omega \neq \emptyset\)
+        
+    \end{itemize}
+
+    \par
+    Dopustne probleme delimo na:
+    \begin{itemize}
+        \item Neomejen, ce je \(\Omega\) neomejena, torej lahko vedno najdemo boljšo rešitev,
+        \item Omejen, ce je \(\Omega\) omejena
+        
+    \end{itemize}
+
+    \par
+    Omejene probleme pa še delimo na:
+    \begin{itemize}
+        \item Optimalen, če obstaja optimalna rešitev,
+        \item Neoptimalen, če lahko vedno najdemo boljšo rešitev
+    \end{itemize}
+
+
+
+    \section{Linearno programiranje}
+
+    \begin{definition}[Linearni program]
+        Linearni program (LP) je optimizacijski problem, v katerem je kriterijska funkcija linearna, dopustna množica pa je podana z linearnimi enačbami in neenačbami.
+    \end{definition}
+
+    \begin{example}
+        \[
+            \begin{array}{ c c }
+                min & 2x_1-3x_2+x_3 \\
+                p.p. & x_1+x_2 \le 4 \\
+                & 3x_1-x_2-x_3 \ge 1 \\
+                & 2x_2-5x_3 = -1 \\
+                & x_1 \ge 0 \\
+                & x_3 \le 0 \\
+            \end{array}
+        \]
+    \end{example}
+    
+
+    \begin{definition}[Standardna oblika LP]
+        LP je v \underline{standarni obliki}, ce:
+        \begin{enumerate}
+            \item je tipa \(max\),
+            \item vse omejitve so oblike \(g_j(x) \le b_j\) in
+            \item za vse spremenljivke so omejene z \(x_i \ge 0\)
+        \end{enumerate}
+    \end{definition}
+
+    \begin{figure}[h!]
+        \[
+            \begin{array}{ c c }
+                max & c_1x_1+...+c_nx_n \\
+                p.p. & a_{11}x_1+...+a_{1n}x_n \le b_1 \\
+                & a_{21}x_1+...+a_{2n}x_n \le b_2 \\
+                & . \\
+                & . \\
+                & . \\
+                & a_{m1}x_1+...+a_{mn}x_n \le b_m \\
+                & x_1,x_2,...,x_n \le 0 \\
+                
+            \end{array}
+        \]
+        \caption{LP v standardni obliki}
+    \end{figure}
+
+    \par
+    LP v standardni obliki lahko izrazimo tudi v matričnem zapisu.  
+    
+    \begin{figure}[H]
+        \[
+            \begin{array}{ c c c c }
+                x = 
+                \begin{bmatrix}
+                    x_1 \\
+                    x_2 \\
+                    . \\
+                    . \\
+                    x_n    
+                \end{bmatrix}
+                &
+                c =
+                \begin{bmatrix}
+                    c_1 \\
+                    c_2 \\
+                    . \\
+                    . \\
+                    c_n
+                \end{bmatrix}
+                &
+                b = 
+                \begin{bmatrix}
+                    b_1 \\
+                    b_2 \\
+                    . \\
+                    . \\
+                    . \\
+                    b_m
+                \end{bmatrix}
+                &
+                A = 
+                \begin{bmatrix}
+                    a_{ij}    
+                \end{bmatrix}
+                \in \mathbb{R}^{m \times n}
+            \end{array}
+        \]
+    \end{figure}
+    
+    \par
+    S temi oznakami lahko vsak LP (tudi takšne, ki niso v matrični obliki) zapišemo v matričnem zapisu:
+    
+    \begin{figure}[H]
+        \[
+            \begin{array}{ c c }
+                max & c^Tx \\
+                p.p. & Ax \le b \\
+                & x \ge 0 \\
+            \end{array}
+        \]
+        \caption{LP v standardni obliki (matrični zapis)}
+    \end{figure}
+    
+    \begin{theorem} 
+        Vsak LP lahko pretvorimo v ekvivalentni LP v standardni obliki.
+    \end{theorem}
+
+    \begin{proof}
+        Pretvorbo poljubnega LP v standardno obliko opravimo v več korakih:
+        \begin{enumerate}
+            \item Minimizacijski problem je ekvivalenten maksimizacijskemu problemu negativne kriterijske funkcije z negativnimi pogoji.
+            \[min f(x) \rightarrow max -f(x)\]
+            \[a_{ij}x_i = b_j \rightarrow -a_{ij}x_i = -b_j\]
+            \[a_{ij}x_i \le b_j \rightarrow -a_{ij}x_i \le -b_j\]
+            \[a_{ij}x_i \ge b_j \rightarrow -a_{ij}x_i \ge -b_j\]
+
+            \item Omejitve spremenljivk popravimo z vpeljavo novih spremenljvk:
+            \begin{enumerate}[label*=\arabic*.]
+                \item \(x_i \ge b_j\) zamenjamo z novo spremenljivko \(x_i'=x_i-b_j\), da dobimo omejitev \(x_i' \ge 0\)
+                
+                \item \(x_i \le b_j\) zamenjamo z novo spremenljivko \(x_i'=b_j-x_i\), da dobimo omejitev \(x_i' \ge 0\)
+                
+                \item Neomejene spremenljivke zamenjamo z dvema novima spremenljivkama, podanima z enačbo \(x_i=x_i'-x_i''\), novi spremenljivki pa sta omejeni z omejitvijo \(x_i',x_i'' \ge 0\) 
+            \end{enumerate}
+
+            \item Vsak pogoj oblike \(g_j(x) = b_j\) pretvorimo v dva pogoja:
+            \par
+            \(g_j(x) \le b_j\) in \(g_j(x) \ge b_j\)
+
+            \item Pogoje oblike \(g_j(x) \ge b_j\) pomnožimo z \(-1\). S tem ga pretvorimo v \(-g_j(x) \le -b_j\)
+        \end{enumerate}
+    \end{proof}
+
+    \paragraph{TODO: Konveksne množice}
+    \clearpage
+
+
+    \subsection{Simpleksna metoda}
+
+    Simpleksna metoda zahteva LP v standardni obliki:
+    \begin{figure}[h!]
+        \[
+            \begin{array}{ c c }
+                max & c^Tx \\
+                p.p. & Ax \le b \\
+                & x \ge 0 \\
+            \end{array}
+        \]
+        \caption{LP v standardni obliki (matrični zapis)}
+    \end{figure}
+
+    Označimo z \(n\) število spremenljivk in z \(m\) število neenakosti, tj. \(c,x \in \mathbb{R}^n \), \(b \in \mathbb{R}^m\) in \(A \in \mathbb{R}^{m \times n}\).
+
+
+    \begin{example}[Problem kmetije]
+        \begin{figure}[h!]
+            \[
+                \begin{array}{ c c }
+                    max & 240x_1+400x_2+320x_3 \\
+                    p.p. & x_1+x_2+x_3 \le 50 \\
+                    & 60x_1+80x_2+100x_3 \le 5000 \\
+                    & 400x_1+600x_2+480x_3 \le 2400 \\
+                    & x_1,x_2,x_3 \ge 0 \\
+                \end{array}
+            \]
+            \caption{LP problema kmetije v standardni obliki}
+        \end{figure}
+
+        Koeficiente v kriterijski funkciji in vsaki omejitvi posebej bomo delili z največjim skupnim deliteljem, da bomo dobili ekvivalenten LP z "lepšimi" številkami.
+
+        \begin{figure}[h!]
+            \[
+                \begin{array}{ c c }
+                    max & 3x_1+5x_2+4x_3 \\
+                    p.p. & x_1+x_2+x_3 \le 50 \\
+                    & 3x_1+4x_2+5x_3 \le 250 \\
+                    & 10x_1+15x_2+12x_3 \le 600 \\
+                    & x_1,x_2,x_3 \ge 0 \\
+                \end{array}
+            \]
+            \caption{LP problema kmetije z "lepšimi" koeficienti}
+        \end{figure}
+
+        Vsako neenakost spremenimo v enakost z novo spremenljivko.
+
+        \begin{figure}[h!]
+            \[
+                \begin{array}{ c }
+                    x_4=50-x_1-x_2-x_3 \\
+                    x_5=250-3x_1-4x_2-5x_3 \\
+                    x_6=600-10x_1-15x_2-12x_3 \\
+                    \hline
+                    z=3x_1+5x_2+4x_3 \\
+                \end{array}
+            \]
+            \caption{Prvi slovar simpleksne metode na problemu kmetije}
+        \end{figure}
+
+        To je \underline{prvi slovar} simpleksne metode.
+    \end{example}
+    
+
+    V splošnem ima slovar \(m+1\) linearnih enačb in \(n+m+1\) spremenljivk.
+    \(m\) spremenljivk izmed \(x_1,x_2,...,x_{n+m}\) in \(z\) je izraženih z ostalimi \(n\) spremenljivkami.
+
+    \par
+    Teh \(m\) spremenljivk, ki so izražene z ostalimi \(n\) spremenljivkami, imenujemo \underline{bazne spremenljivke}, ostale spremenljivke pa so \underline{nebazne} (spremenljivka \(z\) predstavlja vrednost kriterijske funkcije in ne spada med bazne ali nebazne spremenljivke).
+
+    \par
+    \(x_1,x_2,...,x_n\) so \underline{prvotne} spremenljivke.
+    \par
+    \(x_{n+1},x_{n+2}...,x_{n+m}\) so \underline{dodatne} spremenljivke.
+
+    \par
+    V prvem slovarju so bazne spremenljivke natanko dodatne spremenljivke, nebazne pa prvotne.
+
+    \par
+    Rečemo, da je slovar dopusten, če so vsi konstatni koeficienti baznih spremenljivk nenegativni. Prvi slovar je torej dopusten natanko takrat, ko je \(b \ge 0\). Če je \(b \ngeq 0\), uporabimo \textit{dvofazno simpleksno metodo} (kasneje). Zato zaenkrat predpostavimo \(b \ge 0\). V tem primeru je LP zagotovo dopusten, saj je \(x_1=x_2=...=x_n=0\) dopustna rešitev.
+    \par
+    \begin{remark}
+        Vse spremenljivke (tako prvotne kot dodatne) so nenegativne.
+    \end{remark}
+    
+    \par
+    Z dopustnim slovarjem imamo \textit{bazno dopustno rešitev}: nebazne spremenljivke nastavimo na 0. \(f(x)\) je vrednost kriterijske funkcije, \(x\) pa so vrednosti prvotnih spremenljivk (nebazne smo nastavili na 0, bazne pa imajo vrednosti konstatnih koeficientov).
+    
+    \paragraph{TODO: opis algoritma simpleksne metode}
+
+
+    \begin{theorem}[Osnovni izrek linearnega programiranja]
+        \begin{enumerate}
+            \item Če ima LP dopustno rešitev, ima tudi bazno dopustno rešitev.
+            \item Če ima LP optimalno rešitev, ima tudi bazno optimalno rešitev.
+            \item Velja natanko ena od možnosti za dani LP:
+            \begin{itemize}
+                \item LP je nedopusten.
+                \item LP je neomejen.
+                \item LP je optimalen.
+            \end{itemize}
+        \end{enumerate}
+    \end{theorem}
+    \clearpage
+
+
+
+    \subsection{Dualnost pri linearnem programiranju}
+
+    \textbf{Ideja:} Problem kmetije \(P\)
+    \begin{figure}[h!]
+        \[
+            \begin{array}{ c c }
+                max & 3x_1+5x_2+4x_3 \\
+                p.p. & x_1+x_2+x_3 \le 50 \\
+                & 3x_1+4x_2+5x_3 \le 250 \\
+                & 10x_1+15x_2+12x_3 \le 600 \\
+                & x_1,x_2,x_3 \ge 0 \\
+            \end{array}
+        \]
+        \caption{LP problema kmetije}
+    \end{figure}
+
+    Zanimajo nas zgornje meje za kriterijsko funkcijo. 
+    \par
+    Neenakosti pomnožimo z \(y_2,y_2,...,y_m \ge 0\) in seštejemo:
+    \[(x_1+x_2+x_3)y_1+(3x_1+4x_2+5x_3)y_2+(10x_1+15x_2+12x_3)y_3 \le 50y_1+250y_2+600y_3\]
+    \[(y_1+3y_2+10y_3)x_1+(y_1+4y_2+15y_3)x_2+(y_2+5y_2+12y_3)x_3 \le 50y_1+250y_2+600y_3\]
+    
+    Če velja:
+    
+    \[
+        \begin{array}{c}
+            y_1+3y_2+10y_3 \ge 3 \\
+            y_1+4y_2+15y_3 \ge 5 \\
+            y_1+5y_2+12y_3 \ge 4 \\ 
+        \end{array}
+    \]
+    je \(2x_1+5x_2+4x_3 \le 50y_1+250y_2+600y_3\).
+
+    Dualni problem kmetije \(P'\):
+    \begin{figure}[h!]
+        \[
+            \begin{array}{ c c }
+                min & 50 y_1+250y_2+600y_3 \\
+                p.p. & y_1+3y_2+10y_3 \ge 3 \\
+                & y_1+4y_2+15y_3 \ge 5 \\
+                & y_1+5y_2+12y_3 \ge 4 \\
+                & y_1,y_2,y_3 \ge 0 \\
+            \end{array}
+        \]
+        \caption{Dualni problem kmetije}
+    \end{figure}
+
+    V splošnem:
+    \begin{definition}[Dualni LP]
+        Za dani LP P v standardni obliki:
+        \[
+            \begin{array}{ c c }
+                max & c^Tx \\
+                p.p. & Ax \le b \\
+                & x \ge 0 \\
+            \end{array}    
+        \]
+        je \textbf{dualni problem} LP \(P'\)
+        \[
+            \begin{array}{ c c }
+                min & b^Ty \\
+                p.p. & A^Ty \ge c \\
+                & y \ge 0 \\
+            \end{array}
+        \]
+    \end{definition}
+
+    \begin{theorem}
+        Za poljuben LP \(P\) je \(P''=P\).
+    \end{theorem}
+
+    \begin{proof}
+        Naj bo LP \(P\) v standardni obliki. Potem je  \(P'\) v standardni obliki
+        \[
+            \begin{array}{ c c }
+                max & -b^Ty \\
+                p.p. & (-A^T)y \le -c \\
+                & y \ge 0 \\
+            \end{array}
+        \]
+        \(P''\) je potem:
+        \[
+            \begin{array}{ c c }
+                min & -c^Tx \\
+                p.p. & (-A^T)^Tx \ge -b \\
+                & x \ge 0 \\
+            \end{array}
+        \]
+        kar po pretvorbi v standardno obliko postane enako kot P:
+        \[
+            \begin{array}{ c c }
+                max & c^Tx \\
+                p.p. & Ax \le b \\
+                & x \ge 0 \\
+            \end{array}
+        \]
+    \end{proof}
+
+    \begin{remark}
+        Če ima LP \(P\) \(n\) spremenljivk in \(m\) neenačb, ima njegov dualni LP \(P'\) \(m\) spremenljivk in \(n\) neenačb.
+    \end{remark}
+
+    \begin{theorem}[Šibki izrek o dualnosti (ŠID)]
+        Naj bo \(P\) linearni program, \(P'\) njegov dualni LP ter \(x\) in \(y\) dopustni rešitvi za \(P\) in \(P'\). Ob uporabi oznak od prej je potem \(c^Tx \le b^Ty\).
+    \end{theorem}
+
+    \begin{proof}
+        Brez izgube splošnosti predpostavimo, da je LP \(P\) v standardni obliki in opazimo, da je \(A^Ty \ge c\) in \(Ax \le b\). Ker velja tudi \(x \ge 0\) in \(y \ge 0\):
+        \[c^Tx \le (A^Ty)^T = y^TAx \le y^Tb = b^Ty\]
+    \end{proof}
+
+    \begin{corollary}
+        Če velja \(c^Tx* = b^Ty*\) za dopustni rešitvi \(x*,y*\), je \(x*\) optimalna rešitev za \(P\) in \(y*\) optimalna rešitev za \(P'\).
+    \end{corollary}
+
+    \begin{proof}
+        
+    \end{proof}
+\end{document}
