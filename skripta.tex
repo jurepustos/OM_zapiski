@@ -16,13 +16,14 @@
     \newtheorem{definition}[theorem]{Definicija}
     \newtheorem{corollary}[theorem]{Posledica}
     \newtheorem{lemma}[theorem]{Lema}
-    \newtheorem*{remark}{Opomba}
-    \newtheorem{poroposition}[theorem]{Trditev}
+    \newtheorem{proposition}[theorem]{Trditev}
     \newtheorem{example}[theorem]{Zgled}
+
+    \newtheorem*{remark}{Opomba}
 
 
     \title{Optimizacijske metode}
-    \author{Napisal Jure Pustoslemšek po zapiskih predavanj izr. prof. dr. Matjaža Konvalinke}
+    \author{Napisal Jure Pustoslemšek po zapiskih predavanj prof. dr. Matjaža Konvalinke}
     \date{Junij 2020}
     \maketitle
 
@@ -475,9 +476,9 @@
         \]
     \end{definition}
 
-    \begin{theorem}
+    \begin{proposition}
         Za poljuben LP \(P\) je \(P''=P\).
-    \end{theorem}
+    \end{proposition}
 
     \begin{proof}
         Naj bo LP \(P\) v standardni obliki. Potem je  \(P'\) v standardni obliki
@@ -520,10 +521,65 @@
     \end{proof}
 
     \begin{corollary}
-        Če velja \(c^Tx* = b^Ty*\) za dopustni rešitvi \(x*,y*\), je \(x*\) optimalna rešitev za \(P\) in \(y*\) optimalna rešitev za \(P'\).
+        \label{optimalnost}
+        Če velja \(c^Tx^* = b^Ty^*\) za dopustni rešitvi \(x^*,y^*\), je \(x^*\) optimalna rešitev za \(P\) in \(y^*\) optimalna rešitev za \(P'\).
     \end{corollary}
 
     \begin{proof}
+        Ali lahko velja \(c^Tx > c^Tx^*\) za dopustno rešitev \(x\)?
+        Potem velja \(c^Tx > b^Ty^*\), ampak po ŠID velja \(c^Tx \le b^Ty^*\). Protislovje.
+        \par
+        Kaj pa \(b^Ty < b^Ty^*\) za neko dopustno rešitev \(y\)?
+        Potem velja \(b^Ty < c^Tx^*\), ampak po ŠID je \(b^Ty \ge c^Tx^*\). Znova smo prišli v protislovje. Torej \(x^*\) in \(y^*\) morata biti optimalni rešitvi za \(P\) in \(P'\).
+    \end{proof}
+
+    \begin{corollary}
+        Če je \(P\) neomejen, je \(P'\) nedopusten.
+    \end{corollary}
+
+    \begin{theorem}[Krepki izrek o dualnosti (KID)]
+        Če ime \(P\) optimalno rešitev \(x^*\), ima tudi \(P'\) optimalno rešitev \(y^*\) in velja \(c^Tx^* = b^Ty^*\).
+    \end{theorem}
+
+    \begin{proof}
+        Ogledamo si zadnji slovar:
+        \[z=v^* + \sum_{i=1}^{n+m} c_i^*x_i\]
+        \[v^* = \sum_{i=1}^{n} c_i x_i^*\]
+        \(c_i^*=0\), če je \(x_i\) bazna spremenljivka in \(c_i^* \le 0\), če je \(x_i\) nebazna spremenljivka.
+        \begin{center}
+            \(y_i^* = -c_{i+n}\) za \(i=1,...,m\)
+        \end{center}
         
+        \begin{proposition}
+            naj bo \((y_1^*,...,y_m^*)\) dopustna rešitev za \(P'\). Potem je \[\sum_{i=1}^n c_i c_i^* = \sum_{i=1}^m\]
+        \end{proposition}
+
+        Če dokažemo to trditev, sta po posledici \ref{optimalnost} \(x^*\) in \(y^*\) optimalni.
+
+        \[z = v^* + \sum_{i=1}^n c_i^* x_i + \sum_{i=n+1}^{n+m} c_i^* x_i\]
+        
+        \[z = v^* + \sum_{i=1}^n c_i^* x_i + \sum_{i=1}^m c_{i+n} x_{i+n}\]
+       
+        \begin{center}
+            \(c_{i+n}^* = -y_i^*\) in \(x_{i+n} = b_i - \sum_{j=1}^n a+{ij} x_j\)
+        \end{center}
+        
+        \[z = v^* +\sum_{i=1}^n c_i^* x_i + \sum_{j=1}^m (-y_j^*)(b_j - \sum_{i=1}^n a_{ji} x_i)\]
+        
+        \[z = (v^* - \sum_{j=1}^m y_j^* b_j) + \sum_{i=1}^n x_i (c_i^* + \sum_{j=1}^m a_{ji} y_j^*)\]
+
+        Po drugi strani pa je \(z = \sum_{i=1}^n c_i x_i\). Iz tega sledi:
+        \[v^* - \sum_{j=1}^m y_i^* b_j = 0\]
+        \[c_i^* + \sum_{j=1}^m a_{ij} y_j^* = c_i\]
+
+        Ker je \(c_i^* \le 0\) in \(y_i^* = -c_{i+n}^*\), je \(y_i^* = -c_{i+n}^* \ge 0\). Iz tega sledi, da je \(y^*\) dopustna rešitev:
+
+        \[\sum_{j=1}^m a_{ji} y_j^* \ge c_i\]
+        \[y_1^*,y_2^*...,y_m^* \ge 0\]
+
+        Iz \(v^* - \sum_{j=1}^m y_i^* b_j = 0\) sledi tudi, da je 
+        \[v^* = \sum_{j=1}^m y_i^* b_j\]
+        Ker pa je \(v^* = \sum_{i=1}^{n} c_i x_i^*\), sledi 
+        \[\sum_{j=1}^m a_{ji} y_j^* = \sum_{j=1}^m b_j y_i^*\].
     \end{proof}
 \end{document}
