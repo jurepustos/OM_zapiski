@@ -6,7 +6,12 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{enumitem}
+\usepackage{geometry}
+\usepackage{multicol}
+\usepackage{blkarray}
+\usepackage{array}
 
+\geometry{margin=1in}
 
 
 \hyphenpenalty=10000
@@ -593,12 +598,12 @@
 
     \begin{example}
         \[
-            \begin{array}{ c c }
-                max & 3x_1-15x_2+4x_3 \\
-                p.p. & x_1+x_2+x_3 \le 50 \\
-                & 3x_1+4x_2-15x_3 \le 250 \\
-                & 10x_1+15x_2+12x_3 \le 600 \\
-                & x_1,x_2,x_3 \ge 0 \\
+            \begin{array}{ r r c r c r l }
+                max & 3x_1 & - & 15x_2 & + & 4x_3 \\
+                p.p. & x_1 & + & x_2 & + & x_3 & \le 50 \\
+                & 3x_1 & + & 4x_2 & - & 15x_3 & \le 250 \\
+                & 10x_1 & + & 15x_2 & + & 12x_3 & \le 600 \\
+                & \multicolumn{5}{r}{x_1,x_2,x_3} & \ge 0
             \end{array}
         \]
         
@@ -670,4 +675,667 @@
             \item \(\displaystyle \forall i=1,...,n: (\sum_{j=1}^n a_{ij} x_j - b_i)y_i = 0\)
         \end{itemize}
     \end{proof}
+
+    \subsubsection{Ekonomski pomen dualnih spremenljivk}
+
+    \begin{example}
+        \(x_1^*=0,x_2^*=20,x_3^*=25\) je optimalna rešitev problema kmetije. 
+        \[
+            \begin{array}{ l l l }
+                \text{površina:} & 45 & < 50 \\
+                \text{delovna sila:} & 4.100  & < 5.000\\
+                \text{kapital:} & 2.400 & = 2.400
+            \end{array}
+        \]
+
+        Na kmetiji smo dobili idejo, da bi na banki vzeli kredit. Zanima nas, če in koliko se bo naš dobiček povečal, če s tem kreditom povečamo katero od dobrin.
+
+        \[
+            \begin{array}{ l l }
+                \text{površina:} & y_1^*=0 \\
+                \text{delovna sila:} & y_2^*=0 \\
+                \text{kapital:} & y_3^*=\frac{1}{3}
+            \end{array} 
+        \]
+    \end{example}
+
+    Naslednji izrek nam bo povedal odgovor na to vprašanje.
+
+    \begin{theorem}
+        LP \(P\) naj ima neizrojeno bazno rešitev. To pomeni, da so vsi konstantni koeficienti v slovarju \(\neq 0\).
+        Potem obstaja tak \(\epsilon > 0\), da ob pogoju \(| \triangle b_i | \le \epsilon\) za \(i=1,...,m\) velja \(\triangle z^* = \sum_{i=1}^{m} y_i^* \triangle b_i\), kjer je \((y_1^*,...,y_m^*)\) optimalna rešitev \(P^\prime\).
+    \end{theorem}
+
+    Izrek podajamo brez dokaza.
+
+    \begin{example}
+        Vrnimo se k kmetiji. Uporabimo izrek:
+        \[
+            \triangle z^* = \frac{1}{3} \triangle b_3
+        \]
+        \[
+            | \triangle b_i | \le \epsilon\ za\ i=1,2,3
+        \]
+
+        Kredit vzamemo, če je strošek (tj. obresti, zavarovanje, itd.) vsakega evra kredita manjša od \(\frac{1}{3}\) evra. 
+    \end{example}
+
+    \subsubsection{Dual splošnega LP}
+
+    \begin{theorem}
+        Splošni LP \(P\) ima obliko:
+        \[
+            \begin{array}{r l l}
+                max & \sum_{j=1}^{n} c_j x_j \\ 
+                p.p. & \sum_{j=1}^{n} a_{ij} x_j \le b_i & i=1,...,m^\prime \\
+                & \sum_{j=1}^{n} a_{ij} x_j = b_i & i=m^\prime + 1,...,m \\
+                & x_j \ge 0 & j=1,...,n^\prime
+            \end{array}
+        \]
+        \captionof{figure}{Splošni LP}
+        
+
+        Potem je njegov dualni LP \(P^\prime\):
+        \[
+            \begin{array}{r l l}
+                min & \sum_{i=1}^{m} b_i y_i \\ 
+                p.p. & \sum_{i=1}^{m} a_{ij} y_i \ge c_j & j=1,...,n^\prime \\
+                & \sum_{i=1}^{m} a_{ij} y_i =  c_j & j=n^\prime + 1,...,n \\
+                & y_i \ge 0 &  i=1,...,m^\prime
+            \end{array}
+        \]
+        \captionof{figure}{Dual splošnega LP}
+
+        Povedano z besedami:
+        \begin{center}
+            \begin{tabular}{r c l}
+                neenanokosti v \(P\) & \(\longrightarrow\) & nenegativne spremenljivke v \(P^\prime\) \\
+                enakosti v \(P\) & \(\longrightarrow\) & poljubne spremenljivke v \(P^\prime\) \\
+                nenegativne spremenljivke v \(P\) & \(\longrightarrow\) & neenakosti v \(P^\prime\) \\
+                poljubne spremenljivke v \(P\) & \(\longrightarrow\) & enakosti v \(P^\prime\) \\
+            \end{tabular}
+        \end{center}
+        
+            
+    \end{theorem}
+
+    \begin{proof}
+        \(P\) pretvorimo v standardno obliko.
+        \[
+            \begin{array}{r r l l l}
+                max & & \sum_{j=1}^{n^\prime} c_j x_j + \sum_{j=n^\prime + 1}^{n} c_j (x_j^\prime - x_j^{\prime \prime})) \\
+                
+                p.p. & & \sum_{j=1}^{n^\prime} a_{ij} x_j + \sum_{j=n^\prime + 1}^{n} a_{ij} (x_j^\prime - x_j^{\prime \prime})) & \le b_i & j=1,...,m \\
+
+                & - & \sum_{j=1}^{n^\prime} a_{ij} x_j - \sum_{j=n^\prime + 1}^{n} a_{ij} (x_j^\prime - x_j^{\prime \prime})) & \le - b_i & j=m^\prime + 1,...,m \\
+
+                & & x_j \ge 0 & & j=1,...,n^\prime \\
+                & & x_j^\prime,x_j^{\prime\prime} \ge 0 & & j=n^\prime + 1,...,n \\
+            \end{array}    
+        \]
+
+        LP v standardni obliki pa že znamo pretvoriti v dualni LP.
+        \[
+            \begin{array}{r r l l l}
+                min & & \sum_{i=1}^{m^\prime} b_i y_i + \sum_{i=m^\prime + 1}^{m} b_i (y_i^\prime - y_i^{\prime \prime})) \\
+
+                p.p. & & \sum_{i=1}^{m^\prime} a_{ij} y_i + \sum_{i=m^\prime + 1}^{m} a_{ij} (y_i^\prime - y_i^{\prime \prime})) & \ge c_i & i=1,...,n \\
+
+                & - & \sum_{i=1}^{m^\prime} a_{ij} y_i - \sum_{i=m^\prime + 1}^{m} a_{ij} (y_i^\prime - y_i^{\prime \prime})) & \ge - c_i & i=n^\prime,...,n \\
+
+                & & y_i \ge 0 & & i=1,...,m^\prime \\
+                & & y_i^\prime, y_i^{\prime \prime} \ge 0 & & i=m^\prime + 1,...,m \\
+             \end{array}
+        \]
+    \end{proof}
+
+
+    \pagebreak
+    \section{Matrične igre}
+
+    Naslednji optimizacijski problem, ki si ga bomo ogledali, je v bistvu tip igre. Z tovrstnimi problemi se sicer ukvarja teorija iger, mi pa si bomo matrične igre ogledali kot optimizacijski problem. Iz tega vidika gre za poseben tip linearnega programa, ki pa ima nekatere lepe lastnosti, zaradi katerih lahko problem lažje formuliramo in ga poenostavimo, preden jo rešimo z dvofazno simpleksno metodo.
+
+    \begin{definition}
+        Matrična igra je igra za 2 igralca, pri kateri ima 1. igralec na izbiro \(n\) izbir, 2. igralec \(m\) izbir, izid igre pa določa plačilna matrika
+        \[A=[a_{ij}]_{\substack{ i=1,...,n \\ j=1,...,m} } \in \mathbb{R}^{n \times m}\]
+        \(a_{ij}\) je znesek, ki ga 2. igralec plača 1. igralcu, če 1. igralec uporabi \(i\)-to strategijo, 2. igralec pa \(j\)-to strategijo. V primeru, ko je \(a_{ij} < 0\), 1. igralec plača \(-a_{ij}\) 2. igralcu.
+    \end{definition}
+
+    \begin{example}
+        Kamen-papir-škarje
+        \[
+            \begin{blockarray}{c c c c}
+                & \text{K} & \text{P} & \text{Š} \\
+                \begin{block}{c [c c c]}
+                    \text{K} & 0 & -1 & 1 \\
+                    \text{P} & 1 & 0 & -1 \\
+                    \text{Š} & -1 & 1 & 0 \\
+                \end{block}
+            \end{blockarray}
+        \]
+    \end{example}
+
+    \begin{example}
+        Igra Blotto
+        \par
+        Polkovnik Blotto ima 4 bataljone, major Clark pa 3 bataljone. Razporedita jih med 2 strateški točki. V vsaki točki zmaga tisti, ki je tja postavil več bataljonov. Poraženec plača \(k+1\), kjer je \(k\) število bataljonov poraženca na strateški točki. \\
+        Blotto ima 5 možnih strategij: \((4,0),(3,1),(2,2),(1,3),(0,4)\) \\
+        Clark ima 4 možne strategije: \((3,0),(2,1),(1,2),(0,3)\)
+        
+        \[
+            A=
+            \begin{bmatrix}
+                4 & 2 & 1 & 0 \\
+                1 & 3 & 0 & -1 \\
+                -2 & 2 & 2 & -2 \\
+                -1 & 0 & 3 & 1 \\
+                0 & 1 & 2 & 4 \\
+            \end{bmatrix}    
+        \]
+    \end{example}
+
+    Predpostavimo, da igralca igrata po načelu najmanjšega tveganja. Definiramo \(M_1 =\) vrednost najmanjšega tveganja za igralca 1 in \(M_2 =\) vrednost najmanjšega tveganja za igralca 2. 
+    \[
+        \begin{array}{*3{>{\displaystyle}l}}
+            M_1 & = & \max_i \min_j a_{ij} \\
+            M_2 & = & \min_j \max_i a_{ij}
+        \end{array}  
+    \]
+
+    Za igro Blotto je \(M_1=0\) in \(M_2=3\).
+    
+    \begin{proposition}
+        Za vsako matrično igro velja \(M_1 \le M_2\).
+    \end{proposition}
+
+    \begin{proof}
+        Vzemimo poljubno \(i\)-to vrstico in poljuben \(j\)-ti stolpec.
+        \[
+            \min_{j^\prime} a_{ij^\prime} \le a_{ij} \le \max_{i^\prime} a_{i^\prime j}    
+        \]
+    \end{proof}
+
+    \begin{definition}[Sedlo matrične igre]
+        \(a_{i_0 j_0}\) je \textbf{sedlo}, če je najmanjši v vrstici in največji v stolpcu.
+    \end{definition}
+
+    \begin{proposition}
+        Matrična igra \(A\) ima sedlo natanko takrat, ko je \(M_1 = M_2\).
+    \end{proposition}
+
+    \begin{proof}[Dokaz \(\implies\)]
+        \(a_{i_0 j_0}\) naj bo sedlo matrične igre \(A\). Potem je:
+        \[
+            \begin{array}{*2{>{\displaystyle}c}}
+                M_1 = \max_i \min_j a_{ij} & M_2 = \min_j \max_i a_{ij}
+            \end{array}
+        \]
+        \[
+            M_1 \ge \min_j a_{i_0 j} = a_{i_0 j_0} = \max_i a_{i j_0} \ge M_2 \ge M_1
+        \]
+
+        Ker je \(M_1 \le M_2\) in hkrati \(M_1 \ge M_2\), torej je \(M_1 = M_2\).
+    \end{proof}
+
+    \begin{proof}[Dokaz \(\Longleftarrow\)]
+        Naj bo \(M_1 = M_2\). 
+        \par
+        \(M_1\) (maksimum najmanjših vrednosti v stolpcih) je dosežen v vrstici \(i_0\).
+        \[
+            M_1 = \min_j a_{i_0 j}    
+        \]
+        Minimum je dosežen v stolpcu \(j_0\), torej je \(M_1 = a_{i_0 j_0}\). \\
+        
+        \(M_2\) (minimum največjih vrednosti v vrsticah) je dosežen v stolpcu \(j_0^\prime\).
+        \[
+            M_2 = \max_i a_{i j_0^\prime}   
+        \]
+        Maksimum je dosežen v vrstici \(i_0^\prime\), torej je \(M_2 = a_{i_0^\prime j_0^\prime}\). Pokazati želimo, da je \(a_{i_0 j_0^\prime}\) sedlo. \(a_{i_0 j_0^\prime}\) je v isti vrstici kot \(M_1 = a_{i_0 j_0}\), ki pa je najmanjši v svoji vrstici, torej je \(M_1 \le a_{i_0 j_0^\prime}\). Podobno, \(a_{i_0 j_0^\prime}\) je v istem stolpcu kot \(M_2 = a_{i_0^\prime j_0^\prime}\), ki je največji v svojem stolpcu, zato je \(a_{i_0 j_0^\prime} \le M_2\). Ker pa je \(M_1 = M_2\), je \(a_{i_0 j_0^\prime} = M_1 = M_2\), kar pomeni, da je najmanjši v svoji vrstici (ker je enak \(M_1\)) in največji v svojem stolpcu (ker je enak \(M_2\)), torej je sedlo.
+    \end{proof}
+
+    \begin{corollary}
+        Če je \(a_{i_0 j_0}\) sedlo, je \(i_0\) optimalna strategija za 1. igralca in \(j_0\) optimalna strategija za 2. igralca.
+    \end{corollary}
+
+    Ta posledica sledi iz tega, da je sedlo enako \(M_1\), ki je najbolj varna strategija za 1. igralca, in je hkrati enako \(M_2\), ki je najbolj varna strategija za 2. igralca.
+
+    \subsection{Mešana strategija}
+
+    Pri mešani strategiji vsak igralec izbere verjetnosti, da uporabi vsako izmed svojih strategij.
+
+    \[
+        \begin{array}{l c l r}
+            \text{1. igralec:} & (x_1,...,x_n) & x_i \ge 0 \sum_{i=1}^n x_i = 1 \\
+            \text{2. igralec:} & (y_1,...,y_m) & y_j \ge 0 \sum_{j=1}^m y_j = 1 \\
+        \end{array}    
+    \]
+
+    Z \(E(x,y)\) označimo pričakovani 1. igralca, če 1. igralec uporabi mešano strategijo \(x\), 2. igralec pa mešano strategijo \(y\).
+    \[
+        E(x,y) = \sum_{j=1}^{m} \sum_{i=1}^{n} a_{ij} x_i y_i = \sum_{i=1}^{n} x_i (\sum_{j=1}^m a_{ij} y_j) = \sum_{j=1}^n x_i (Ay)_i = x^T A y = (A^T x)^T y    
+    \]
+
+    Recimo, da se 1. igralec odloči uporabiti neko strategijo \(x\). Ker ne ve, kakšno strategijo bo uporabil 2. igralec, je zanj najbolj smiselno pogledati, koliko bo dobil oz. izgubil v najslabšem primeru:
+    \[
+        \min_y x^T A y    
+    \]
+
+    Torej, če hoče 1. igralec igrati z optimalno strategijo, tj. tisto, s katero je najslabši primer najboljši možen.
+    \[
+        \max_x \min_y x^T A y    
+    \]
+
+    Za 2. igralca izpeljemo podobno formulo za njegovo optimalno strategijo:
+    \[
+        \min_y max_x x^T A y    
+    \]
+    
+    \begin{proposition}
+        Naj bo \(A\) matrična igra. Potem velja
+        \[
+            \max_x \min_y x^T A y \le \min_y \max_x x^T A y    
+        \]
+    \end{proposition}
+
+    \begin{proof}
+        Izberemo strategiji \(x,y\).
+        \[
+            \min_{y^\prime} x^T A y^\prime \le x^T A y \le \max_{x^\prime} x^{\prime^T} A y    
+        \]
+    \end{proof}
+
+    \begin{lemma}
+        \[
+            \min_y x^T A y = \min_{j=1,...,m} \sum_{i=1}^n a_{ij} x_i    
+        \]
+    \end{lemma}
+
+    \begin{proof}
+        Označimo \(s = \min_y \sum_{j=1}^n a_{ij} x_i\).
+        \[
+            y = (0,...,1,...,0)    
+        \]
+        \(y\) je \textbf{Čista strategija}. Označimo \(y_{j^\prime} = 1\). Za vse ostale \(j\) je \(y_j = 0\). 
+        \[
+            x^T A y = \sum_{i=1}^n \sum_{j=1}^m a_{ij} x_i y_j 
+        \]
+        Ker je \(y_j=0\) za vse \(j \neq j^\prime\):
+        \[
+            \sum_{i=1}^n \sum_{j=1}^m a_{ij} x_i y_j  = \sum_{i=1}^n a_{ij} x_i    
+        \]
+        \[
+            \min_y x^T A y \le \sum_{i=1}^n a_{ij} x_i \text{ za } \forall j=1,...,m    
+        \]
+        To pomeni, da je 
+        \[
+            \min_y x^T A y \le s = \min_y \sum_{j=1}^n a_{ij} x_i 
+        \]
+
+
+        Pokažimo še nasprotno neenakost. Upoštevamo, da je \(y \ge 0\) in da je \(y\) čista strategija:
+        \[
+            x^T A y = \sum_{j=1}^n (\sum_{i=1}^m a_{ij} x_i) y_j \ge \sum_{j=1}^m s\ y_i = s
+        \]
+        Iz tega se vidi:
+        \[
+            \min_y x^T A y \ge s
+        \]
+    \end{proof}
+
+    \begin{remark}
+        Na izbrano strategijo 1. igralca se 2. igralec lahko optimalno brani s čisto strategijo.
+    \end{remark}
+
+    \begin{lemma}
+        \[
+            \max_x x^T A y = \max_{i=1,...,n} \sum_{j=1}^m a_{ij} y_j
+        \]
+    \end{lemma}
+
+    Ta lema ima enak dokaz in opombo.
+    \par
+    Igro bi radi formulirali kot LP. S stališča 1. igralca:
+    \[
+        \max_x \min_y x^T A y = \max_x \min_{j=1,...,m} \sum_{i=1}^n a_{ij} x_i    
+    \]
+    To ni linearna funkcija, vendar lahko s trikom to popravimo.
+    \[
+        \begin{array}{r l l}
+            max & s \\
+            p.p. & s \le \sum_{i=1}^n a_{ij} x_i & j=1,...,m \\
+            & \sum_{i=1}^n x_i = 1 \\
+            & x_i \ge 0 & i=1,...,n
+        \end{array}  
+    \]
+
+    Podobno pogledamo še iz stališča 2. igralca:
+    \[
+        \begin{array}{r l l}
+            min & t \\
+            p.p. & t \ge \sum_{j=1}^m a_{ij} y_j & i=1,...,n \\
+            & \sum_{j=1}^m y_j = 1 \\
+            & x_i \ge 0 & j=1,...,m
+        \end{array}  
+    \]
+
+    Lahko vidimo, da sta problema dualna. Oba problema sta dopustna - izberemo dve poljubni čisti strategiji. Po KID sta oba problema optimalna, njuni optimalni vrednosti pa sta enaki.
+
+    \begin{theorem}[Izrek o minimaksu]
+        Za poljubno matrično igro je
+        \[
+            \max_x \min_y x^T A y = \min_y \max_x x^T A y    
+        \]
+    \end{theorem}
+    Tej vrednosti pravimo \textbf{vrednost} ali \textbf{strateško sedlo} igre. Igra je \textbf{poštena}, če je njena vrednost 0.
+
+    \par
+    Matrično igro rešimo z dvofazno simpleksno metodo. Preverjanje optimalnosti je enostavno:
+    \[
+        \begin{array}{l c l}
+            x,y\ \text{dopustna} \\
+            x,y\ \text{optimalna} & \Longleftrightarrow & \min_j \sum_{i=1}^m a_{ij} x_i = \max_i \sum_{j=1}^m a_{ij} y_j
+        \end{array}    
+    \]
+
+    \begin{proposition}
+        Če ima \(A\) sedlo \(a_{i_0 j_0}\), potem je \(i_0\) optimalna strategija za 1. igralca, \(j_0\) pa za drugega.
+    \end{proposition}
+
+    \begin{proof}
+        \[
+            s = \min_j \sum_{i=1}^n a_{ij} x_i = \min_j a_{i_0 j} = a_{i_0 j_0}    
+        \]
+
+        \[
+            t = \max_i \sum_{j=1}^m a_{ij} y_j = \max_i a_{i j_0} = a_{i_0 j_0}    
+        \]
+    \end{proof}
+
+    \begin{definition}
+        Matrična igra \textbf{simetrična}, če je \(A^T = -A\)
+    \end{definition}
+    
+    \begin{proposition}
+        Simetrična igra je poštena. 
+    \end{proposition}
+
+    \begin{proof}
+        Za dokaz bomo potrebovali naslednjo izpeljavo:
+        \[
+            x^T A y = x^T (-A^T) y = - (Ax)^T y = - y^T A x
+        \]
+
+        Naj bo \(v\) vrednost simetrične matrične igre. Potem je
+        \[
+            v = \min_y \max_x x^T A y = \max_x \min_y (-y^T A x) = - \max_y \min_x y^T A x = - \max_x \min_y x^T A y = -v
+        \]
+
+        Ker je \(v = -v\), mora biti \(v = 0\).
+    \end{proof}
+
+    \begin{definition}
+        Naj bosta  \(a,b \in \mathbb{R}^n\). Rečemo, da \(a\) \textbf{dominira} \(b\), če je \(a_i \ge b_i\) za vse \(i\).
+    \end{definition}
+
+    \begin{proposition}
+        Če \(i\)-ta vrstica plačilne matrike dominira \(i^\prime\)-to vrstico, se vrednost igre ne spremeni, če izbrišemo vrstico \(i^\prime\).
+    \end{proposition}
+
+    \begin{proposition}
+        Če \(j\)-ti stolpec plačilne matrike dominira \(j^\prime\)-ti stolpec, se vrednost igre ne spremeni, če izbrišemo stolpec \(j\).
+    \end{proposition}
+
+    Torej lahko brišemo večje stolpce in manjše vrstice brez vpliva na vrednost igre.
+
+
+    \pagebreak
+    \section{Problem razvoza (angl. Transshipment problem)}
+
+    Imamo mesta, kjer se neka surovina proizvaja ali porablja, poti med mesti in ceno vsake poti na enoto surovine. Naša naloga je zadovoljiti potrebe po surovini s čim manjšimi stroški. Matematično ta problem predstavimo z grafom:
+    \par
+    Naj bo \(G = (V,E)\) usmerjen graf. Za vsako vozlišče \(v \in V\) imamo dano utež \(b_v \in \mathbb{R}\). Če je \(b_v > 0\), je vozlišče porabnik, če je pa \(b_v < 0\), pa je proizvajalec.
+    \par
+    Za vsako povezavo \(e \in E\) imamo dano utež \(c_e \in \mathbb{R}\), ki predstavlja ceno prevoza na enoto surovine.
+    \[
+        \text{Predpostavka: } \sum_{v} b_v = 0   
+    \]
+    \[
+        \begin{array}{l c r}
+            \text{Iščemo:} & x_e \ge 0, & \displaystyle min\ \sum_{e \in E} c_e x_e
+        \end{array}
+    \]
+
+    V vsakem vozlišču velja Kirchhoffov zakon:
+    \[
+        \sum_{Konec(e)=v} x_e\ - \sum_{Zacetek(e)=v} x_e = b_v    
+    \]
+
+    Sestavimo \textbf{incidenčno matriko} \(A\):
+    \[
+        a_{ve} = 
+        \begin{cases}
+            0 & v \text{ ni vozlišče } e \\
+            1 & Konec(e)=v \\
+            -1 & Zacetek(e)=v \\
+        \end{cases}
+    \]
+
+    Problem razvoza (PR) izrazimo kot LP:
+    \[
+        \begin{array}{l l}
+            min & c^T x \\
+            p.p. & Ax = b \\
+            & x \ge 0
+        \end{array}
+    \]
+
+    PR lahko rešimo z dvofazno simpleksno metodo, lahko pa jo rešimo tudi s simpleksno metodo na omrežjih.
+
+    \subsection{Simpleksna metoda na omrežjih}
+
+    Simpleksno metodo na omrežjih začnemo, podobno kot navadno simpleksno metodo ali drugo fazo dvofazne simpleksne metode, tj. z dopustno rešitvijo, katero izboljšujemo, dokler jo je možno izboljšati. Pri simpleksni metodi na omrežjih bomo za začetno dopustno rešitev potrebovali vpeto drevo \(T\) (za vpeto drevo velja \(V(T)=V(G)\)). Potrebovali bomo tudi dopustno rešitev \((x_e)_{e \in E}\), za katero bo veljalo \(x_e=0\) za \(e \notin T\). Takšni rešitvi pravimo \textbf{drevesna dopustna rešitev (ddr)}. Postopek, kako priti do začetne \(ddr\) oz. pokazati, da je problem nedopusten, bomo videli malo kasneje. Kasneje bomo tudi dokazali, da je optimalna rešitev vedno drevesna.
+    \par
+    
+
+    \begin{enumerate}
+        \item Za drevesno dopustno rešitev izberemo poljubno vozlišče in izračunamo razvozne cene od tega do vseh drugih vozlišč.
+            \[
+                y_1 = 0    
+            \]
+            \[
+                y_j = y_i + c_{ij} \text{ za vsak } ij \in T   
+            \]
+            Ta sistem enačb je enoličen, ker je \(T\) drevo. Ker je \(T\) vpeto drevo, smo s tem sistemom enačb prišli do vseh vozlišč v originalnem grafu \(G\).
+
+        \item Poiščemo povezavo \(ij \in G \backslash T\), za katero je \(y_i + c_{ij} < y_j\). To je \textbf{vstopajoča povezava}, ki jo dodamo v drevo \(T\).
+        
+        \item Ko smo v drevo dodali povezavo \(e\), smo dobili natanko en cikel. V tem ciklu ločimo povezave glede na smer povezave \(e\):
+            \begin{itemize}
+                \item povezave v smeri povezave \(e\) so \textit{preme},
+                \item povezave v nasprotni smeri so \textit{obratne}
+            \end{itemize}
+        
+            Odstraniti hočemo eno povezavo \(f\) iz tega cikla, da dobimo nov \textit{ddr}. Tej povezavi rečemo \textbf{izstopajoča povezava}. Ker \(f\) ne bo v novem drevesu, bo \(x^\prime_f=0\). Da bo nov \textit{ddr} ustrezal Kirchhoffovemu pogoju, moramo premim povezavam na ciklu povečati pretok za \(x_f\), obratnim pa ga zmanjšati za \(x_f\). Ker hočemo povezavi \(f\) zmanjšati \(x_f\), da bomo za \(f\) izbrali eno izmed obratnih povezav. Da pa bo še vedno \(x_e \ge 0\) za vse \(e \in E(G)\), moramo za \(f\) izbrati obratno povezavo z najmanjšim \(x_f\). Torej bomo premim povezavam povečali, obratnim pa zmanjšali pretok za
+            \[
+                t = \min \{\ x_f\ |\ f\ \text{obratna povezava}\ \}    
+            \]
+    \end{enumerate}
+
+    Postopek ponavljamo, dokler v 2. koraku ne najdemo vstopajoče povezave. To je analogno koncu navadne simpleksne metode, ki se tudi konča takrat, ko ne najdemo nobene vstopajoče spremenljivke.
+
+    \begin{proposition}
+        Naj bo \(x\) \textit{ddr} in \(y\) vektor cen razvoza za PR. Potem je \(c^T x = b^T y\). 
+    \end{proposition}
+
+    \begin{proof}
+        PR je omejen z \(Ax=b\), torej je \(b^T y = (Ax)^T y = x^T (A^T y)\). \(A^T\) ima v vrstici povezave \(ij\) vrednost 1 v stolpcu vozlišča \(j\) in vrednost -1 v stolpcu vozlišča \(i\), povsod drugje pa ima vrednost 0\, zato je \((A^T y)_{ij}=y_j-y_i\). Iz enačb, ki določajo cene razvoza in predpostavke, da je \(x\) \textit{ddr}, imamo še enačbi:
+        \[
+            \begin{array}{l r c l}
+                \forall ij \in T: & y_j - y_i & = & c_{ij} \\
+                \forall ij \notin T: &  x_{ij} & = & 0   
+            \end{array}
+        \]
+        
+        Iz teh enačb izpeljemo
+        \[
+            b^T = x^T (A^T y) = \sum_{ij \in E} x_{ij}\ (y_j - y_i) = \sum_{ij \in E} x_{ij}\ c_{ij} = c^T x    
+        \]
+    \end{proof}
+
+    \begin{proposition}
+        Naj bo \(x\) \textit{ddr} in \(y\) vektor cen razvoza. Če za vse \(ij \in E\) velja \(y_i + c_{ij} \ge y_j\), je \(x\) optimalna rešitev.
+    \end{proposition}
+
+    \begin{proof}
+        \(x\) je dopustna rešitev, torej \(Ax = b\) in \(x \ge 0\). Po predpostavki je \((A^T y)_{ij} = y_j - y_i \le c_{ij}\).
+        \[
+            c^T x \ge (A^T y)^T x = y^T (Ax) = y^T b = c^T x     
+        \]
+    \end{proof}
+
+    \begin{proposition}
+        Če je \(G\) povezan graf (kot neusmerjen graf), potem obstaja dopustna rešitev za PR natanko tedaj, ko obstaja \textit{ddr}.
+    \end{proposition}
+
+    \begin{proof}
+        (\(\Longleftarrow\)) Očitno. Dokažimo (\(\implies\)): \\
+        Predpostavimo, da na dopustni rešitvi obstaja cikel \(C\), na katerem je \(x_e > 0\) za vse \(e \in C\). Izberemo smer in razvoz povezave z najmanjšim \(t = x_e\). Povezavam v smeri povezave \(e\) zmanjšamo razvoz za \(t\), povezavam v nasprotni smeri pa razboz povečamo za \(t\). Dobili smo \textit{ddr}.
+    \end{proof}
+
+    \begin{remark}
+        Gozdu (grafu, v katerem so povezane komponente drevesa) dodamo povezave z razvozom \(x_{ij} = 0\) med povezanimi komponentami, da dobimo drevo.
+    \end{remark}
+
+    Če smo med postopkom simpleksne metode na omrežjih dobili cikel s samimi premimi povezavami, očitno ne morem izbrati izstopajoče povezave, ker bi ta morala biti obratna. V tem primeru smo dobili \textbf{negativen cikel}, tj. cikel, na katerem je vsota cen negativna. Če surovino prevozimo skozi cikel, smo s prevozom zaslužili! To pomeni, da lahko \(c^T x\) postane poljubno negativen, če surovino poljubnokrat peljemo skozi ta cikel. To pa pomeni, da je podan PR neomejen problem, če je dopusten.
+
+    \par
+    Tudi pri simpleksni metodi na omrežjih lahko pride do ciklanja. To lahko preprečimo s Cunninghamovim pravilom (lahko ga razumemo kot analognega pravilu najmanjšega indeksa):
+    \par
+    Naj bo \(e = ij\) vstoppajoča povezava. Neko vozlišče v \(G\) označimo kot koren in ga poimenujemo \(r\). Naj bo \(v\) prvo vozlišče na poti od \(r\) do \(i\), ki je na ciklu. Med obratnimi povezavami na ciklu z najmanjšim razvozom izberemo tisto, ki je prva na poti od \(v\) proti \(e\).
+
+    \subsection{Dvofazna simpleksna metoda na omrežjih}
+
+    Ostaja nam še vprašanje - kako najdemo prvotno drevesno dopustno rešitev oz. dokažemo, da je problem nedopusten? Odgovor na to vprašanje je dvofazna simpleksna metoda na omrežjih, ki je povsem analogna navadni dvofazni simpleksni metodi.
+    \par
+    Izberemo poljubno vozlišče \(r\) in ga imenujemo koren. Za vsako vozlišče \(v \neq r\):
+    \begin{itemize}
+        \item \(b_v \ge 0\): dodamo povezavo \(rv\), če je še ni,
+        \item \(b_v < 0\): dodamo povezavo \(vr\), če je še ni
+    \end{itemize}
+
+    Te dodatne povezave imenujemo \textbf{umetne povezave}. Cene umetnih povezav nastavimo na \(c_e=1\), cene prvotnih pa na \(c_e=0\). Za ta problem obstaja \textit{ddr}: Povezavam \(rv\), kjer je \(b_v \ge 0\), nastavimo \(x_{rv}=b_v\), povezavam \(vr\), kjer je \(b_v < 0\), pa nastavimo \(x_{vr}=b_v\). Ostalim povezavam nastavimo \(x_{ij}=0\). Takšen \(x\) očitno ustreza pogoju \(x \ge 0\). Preverimo, da velja tudi Kirchhoffov zakon:
+    \[
+        \begin{array}{l l r}
+            v \neq r, & b_v \ge 0 & \displaystyle \sum_{K(e)=v} x_e -\ \sum_{Z(e)=v} x_e = b_v - 0 = b_v \\
+            v \neq r, & b_v \ge 0 & \displaystyle \sum_{K(e)=v} x_e -\ \sum_{Z(e)=v} x_e = 0 - (-b_v) = b_v \\
+        \end{array}
+    \]
+
+    Za \(v=r\) tudi velja:
+    \[
+        \sum_{K(e)=r} x_e -\ \sum_{Z(e)=r} x_e = \sum_{\substack{v \neq r \\ b_v < 0}} (-b_v) - \sum_{\substack {v \neq r \\ b_v \ge 0}} b_v = - \sum_{v \neq r} b_v = b_r\ \text{(ker je } \sum_{v \in V} b_v = 0 \text{)}
+    \]
+
+    Ker je \(c_e \in \{ 0,1 \}\), je \(c^T x \ge 0\), zato problem ni neomejen, torej je optimalen. Na tem problemu uporabimo simpleksno metodo na omrežjih.
+
+    \begin{proposition}
+        Če je optimalna vrednost tega problema enaka 0, je prvotni problem dopusten.
+    \end{proposition}
+
+    \begin{proof}[Dokaz \(\implies\)]
+        Na umetnih povezavah je \(c_e=1\), torej je \(x_e=0\), ker je \(c^T x = 0\). Vzamemo \(x_e\) na prvotnih povezavah in imamo dopustno rešitev, saj za prvotne povezave veljajo enake omejitve kot pri prvotnem problemu.
+    \end{proof}
+
+    \begin{proof}[Dokaz \(\Longleftarrow\)]
+        Predpostavimo, da je prvotni problem dopusten. Potem ima dopustno rešitev na prvotnih povezavah. te vrednost \(x_e\) ohranimo, na umetnih povezavah pa nastavimo \(x_e=0\). Ker je \(c_e=0\) za prvotne povezave, je \(c^T x = 0\). Ker je \(c^T x \ge 0\), imamo optimalno rešitev.
+    \end{proof}
+
+    Ko se 1. faza ustavi, imamo tri možnosti:
+    \begin{itemize}
+        \item \(T^\ast\) nima umetne povezave. Potem je \(T^\ast\) \textit{ddr} za prvotni problem.
+        \item \(T^\ast\) vsebuje vsaj eno umetno povezavo z razvozom \(x_e > 0\). Potem je optimalna vrednost problema 1. faze \(> 0\). Prvotni problem ni dopusten.
+        \item \(T^\ast\) vsebuje umetne povezave, in vse z ničelnim razvozom. Odstranimo vse umetne povezave in dobimo gozd. Gozdu dodamo prvotne povezave z ničelnim razvozom in dobimo drevesno dopustno rešitev.
+    \end{itemize}
+
+    2. faza je običajna simpleksna metoda na omrežjih.
+
+    \subsection{Dual PR}
+
+    LP za PR je:
+    \[
+        \begin{array}{l r c l}
+            min & c^T x \\
+            p.p. & Ax & = & b \\
+            & x & \ge & 0
+        \end{array}    
+    \]
+    
+    \[
+        \begin{array}{l r c r}
+            max & (-c)^T x \\
+            p.p. & (-A)x & = & -b \\
+            & x & \ge & 0
+        \end{array}    
+    \]
+
+    Dualni LP za PR (\(PR^\prime\)) je potem:
+    \[
+        \begin{array}{l r c r}
+            min & (-b)^T y \\
+            p.p. & (-A)^T y & \ge & -c \\
+        \end{array}    
+    \]
+    
+    \[
+        \begin{array}{l r c r}
+            max & b^T y \\
+            p.p. & A^T y & \le & c \\
+        \end{array}    
+    \]
+
+    \begin{theorem}
+        Naj bo \(x\) \textit{ddr} in \(y\) cene razvoza ob koncu simpleksne metode na omrežjih. Potem je \(x\) optimalna rešitev za \(PR\), \(y\) pa za \(PR^\prime\).
+    \end{theorem}
+
+
+    \begin{proof}
+        Ker je \(y_j - y_i \le c_{ij}\), je \(y\) dopustna rešitev za \(PR^\prime\). Ker je \(c^T x = b^T y\), je po ŠID \(x\) optimalna za \(PR\) in \(y\) optimalna za \(PR^\prime\).
+    \end{proof}
+
+    \begin{theorem}[Izrek o celoštevilskih rešitvah]
+        Naj bo \(b_v \in \mathbb{Z}\) za vse povezave \(v \in V\). Potem velja:
+        \begin{enumerate}[label=(\alph*)]
+            \item Če ima problem dopustno rešitev, ima tudi celoštevilsko dopustno rešitev.
+            \item Če ima problem optimalno rešitev, ima tudi celoštevilsko optimalno rešitev.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        Opravimo 1. fazo simpleksne metode na omrežjih in pridemo do dopustne rešitve. Prva \textit{ddr} je celoštevilska. Nadaljujemo z 2. fazo, in tu na vsakem koraku ostanemo v celih številih.
+    \end{proof}
+
+    \textbf{TODO: dvojno stohastične matrike}
+
+    \pagebreak
+    \section{Problem razvoza z omejitvami (PRO)}
+
+    Problem razvoza z omejitvami je isti problem kot PR, le da imamo za vsako vozlišče \(e\) še omejitev \(u_e \in [0, \infty)\). Rešitev je dopustna, če \(Ax = b\) in \(0 \ge x \le u\).
+
+    \begin{definition}
+        Naj bo \(x\) dopustna rešitev za PRO. \(x\) je drevesna dopustna rešitev, če obstaja takšno drevo \(T\), da za vsako \(e \notin T\) velja \(x_e = 0\) (\textbf{prazna povezava}) ali \(x_e = u_e\) (\textbf{nasičena povezava}).
+    \end{definition}
+
+    Uporabimo varianto simpleksne metode na omrežjih - tudi tu izberemo \(y_1 = 0\) in izračunamo \(y_j = y_i + c_{ij}\) za vse \(ij \in T\). Za vstopajočo povezavo lahko izberemo \(ij \notin T\), če velja \(x_{ij} = 0\) in \(y_i + c_{ij} < y_j\) ali \(x_{ij} = u_ij\) in \(y_i + c_{ij} > y_j\).
+    \par
+    Izbira izstopajoče povezave je odvisna od načina, na katerega smo izbrali vstopajočo povezavo.
+    \begin{enumerate}[label=(\alph*)]
+        \item Če za vstopajočo povezavo velja \(x_{ij}=0\) in \(y_i+c_{ij} < y_j\), potem za izstopajočo povezavo iščemo obratno povezavo, katero bomo zmanjšali na 0, ali pa premo povezavo, katero bomo povečali na \(u_e\). Ker mora veljati Kirchhoffov zakon in omejitev med 0 in \(u_e\) za vse povezave, bomo vse preme povezave povečali, obratne pa zmanjšali za takole definiran \(t\):
+            \[
+                t = \min \{\ x_e\ |\ e\ \text{obratna}\ \} \cup \{\ u_e - x_e\ |\ e\ \text{prema}\ \}
+            \]
+        \item Če pa za vstopajočo povezavo velja \(x_{ij}=u_e\) in \(y_i+c_{ij} > y_j\), pa preme povezave na ciklu zmanjšamo, obratne pa povečamo za \(t\):
+            \[
+                t = \min \{\ x_e\ |\ e\ \text{prema}\ \} \cup \{\ u_e - x_e\ |\ e\ \text{obratna}\ \}  
+            \]
+    \end{enumerate}
 \end{document}
