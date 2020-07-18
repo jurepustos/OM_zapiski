@@ -400,6 +400,7 @@
 
 
     \begin{theorem}[Osnovni izrek linearnega programiranja]
+        \(\)\\
         \begin{enumerate}
             \item Če ima LP dopustno rešitev, ima tudi bazno dopustno rešitev.
             \item Če ima LP optimalno rešitev, ima tudi bazno optimalno rešitev.
@@ -1314,18 +1315,78 @@
         Opravimo 1. fazo simpleksne metode na omrežjih in pridemo do dopustne rešitve. Prva \textit{ddr} je celoštevilska. Nadaljujemo z 2. fazo, in tu na vsakem koraku ostanemo v celih številih.
     \end{proof}
 
-    \textbf{TODO: dvojno stohastične matrike}
 
-    \pagebreak
-    \section{Problem razvoza z omejitvami (PRO)}
+    \subsection{Dvojno stohastične matrike}
 
-    Problem razvoza z omejitvami je isti problem kot PR, le da imamo za vsako vozlišče \(e\) še omejitev \(u_e \in [0, \infty)\). Rešitev je dopustna, če \(Ax = b\) in \(0 \ge x \le u\).
+
+    \begin{definition}
+        Matrika \(A \in \mathbb{R}^{n \times n}\) je \textbf{dvojno stohastična}, če so \(a_{ij} \ge 0\) in so vsote elementov vsake vrstice in stolpca enake 1.
+    \end{definition}
+
+    \begin{definition}
+        Matrika \(A \in \mathbb{R}^{n \times n}\) je \textbf{permutacijska matrika}, če so \(a_{ij} \in \{0,1\}\) in je v vsaki vrstici in stolpcu natanko ena enica.
+    \end{definition}
+
+    Permutacijska matrika je očitno tudi dvojno stohastična.
+
+    \begin{proposition}
+        Naj bo \(A \in \mathbb{R}^{n \times n}\) dvojno stohastična matrika. Potem obstaja takšna permutacijska matrika \(P\), da velja \(p_{ij} > 0 \implies a_{ij} > 0\).
+    \end{proposition}
+
+    \begin{proof}
+        Konstruiramo dvodelni graf \(G\), katerega vozlišča so vrstice in stolpci \(A\):
+        \[
+            \begin{array}{l l l}
+                V & = & \{\ v_1,...,v_n,s_1,...,s_n\ \} \\
+                E & = & \{\ v_i s_j\ |\ a_{ij} > 0\ \}
+            \end{array}
+        \]
+        Nastavimo še uteži vozlišč in povezav \(b_{v_i}=-1\), \(b_{s_j}=1\), \(c_{v_i s_j}=0\). \\
+        Na tem grafu Kirchhoffov zakon:
+        \[
+            \sum_{v \in V} b_v = -n + n = 0    
+        \]
+        Ta graf interpretiramo kot problem razvoza. Problem je dopusten, saj imamo rešitev \(x_{ij}=a_{ij}\):
+        \[
+            \sum_{K(e)=v_i} x_e - \sum_{Z(e)=v_i} x_e = 0 - a_{ij} = - \sum_{j:a_{ij}>0} a_{ij} = -1
+        \]
+        \[
+            \sum_{K(e)=s_j} x_e - \sum_{Z(e)=s_j} x_e = a_{ij} - 0 = \sum_{i:a_{ij}>0} a_{ij} = 1
+        \]
+        Opomba: pri zadnji vsoti je pogoj \(a_{ij} > 0\), ker pri \(a_{ij}=0\) ni povezave v grafu, in zato tudi \(x_{ij}\) zanjo ne obstaja. \\
+        Ker imamo dopustno rešitev \(a_{ij} \ge 0\), imamo tudi celoštevilsko dopustno rešitev \(p_{ij} \ge 0\). \\
+        
+    \end{proof}
+
+    \begin{theorem}[Konigov izrek o plesnih parih]
+        Naj bo \(k\)-regularen dvodelen graf \(G\). Potem ima \(G\) popolno prirejanje. 
+    \end{theorem}
+        
+    \begin{proof}
+        \(V(G)=X \cup Y\). Definiramo matriko \(A \in \mathbb{R}^{n \times n}\), z elementi:
+        \[
+            a_{ij}=
+            \begin{cases}
+                \frac{1}{k}: & x_i \sim y_j \\
+                0: & x_i \nsim y_j    
+            \end{cases}
+        \]
+        \(A\) je dvojno stohastična. Obstaja permutacijska matrika \(P\), za katero velja \(p_{ij} > 0 \implies a_{ij} > 0\). Torej, če je \(p_{ij} = 1\), je \(x_i \sim y_j\). Ker to velja pri vsakem \(x_i\) natanko za enega \(y_j\), in obratno, smo našli popolno prirejanje:
+        \[
+            M = \{\ x_i y_j \in E\ |\ p_{ij}=1\ \}    
+        \]
+    \end{proof}
+
+
+    \subsection{Problem razvoza z omejitvami (PRO)}
+
+    Problem razvoza z omejitvami je isti problem kot PR, le da imamo za vsako vozlišče \(e\) še omejitev \(u_e \in [0, \infty)\). Rešitev je dopustna, če \(Ax = b\) in \(0 \le x \le u\).
 
     \begin{definition}
         Naj bo \(x\) dopustna rešitev za PRO. \(x\) je drevesna dopustna rešitev, če obstaja takšno drevo \(T\), da za vsako \(e \notin T\) velja \(x_e = 0\) (\textbf{prazna povezava}) ali \(x_e = u_e\) (\textbf{nasičena povezava}).
     \end{definition}
 
-    Uporabimo varianto simpleksne metode na omrežjih - tudi tu izberemo \(y_1 = 0\) in izračunamo \(y_j = y_i + c_{ij}\) za vse \(ij \in T\). Za vstopajočo povezavo lahko izberemo \(ij \notin T\), če velja \(x_{ij} = 0\) in \(y_i + c_{ij} < y_j\) ali \(x_{ij} = u_ij\) in \(y_i + c_{ij} > y_j\).
+    Uporabimo varianto simpleksne metode na omrežjih - tudi tu izberemo \(y_1 = 0\) in izračunamo \(y_j = y_i + c_{ij}\) za vse \(ij \in T\). Za vstopajočo povezavo lahko izberemo \(ij \notin T\), če velja \(x_{ij} = 0\) in \(y_i + c_{ij} < y_j\) ali \(x_{ij} = u_{ij}\) in \(y_i + c_{ij} > y_j\).
     \par
     Izbira izstopajoče povezave je odvisna od načina, na katerega smo izbrali vstopajočo povezavo.
     \begin{enumerate}[label=(\alph*)]
@@ -1338,4 +1399,633 @@
                 t = \min \{\ x_e\ |\ e\ \text{prema}\ \} \cup \{\ u_e - x_e\ |\ e\ \text{obratna}\ \}  
             \]
     \end{enumerate}
+
+    \begin{theorem}
+        Naj bo \(x\) \textit{ddr}. Če za vse \(ij \notin T\) velja:
+        \begin{enumerate}[label=(\alph*)]
+            \item \(x_{ij}=0 \implies y_i+c_{ij} \ge y_j\) ali
+            \item \(x_{ij}=u_{ij} \implies y_i+c_{ij} \le y_j\)
+        \end{enumerate}
+
+        potem je \(x\) optimalna rešitev.
+    \end{theorem}
+        
+    \begin{proof}
+        \[
+            \begin{array}{l r r}
+                ij \in T: & y_i + c_{ij} = y_j & y_i + c_{ij} - y_j = 0 \\
+                ij \notin T, x_e = 0: & y_i + c_{ij} \ge y_j & y_i + c_{ij} - y_j \ge 0 \\
+                ij \notin T, x_e = u_e: & y_i + c_{ij} \le y_j & y_i + c_{ij} - y_j \le 0
+            \end{array}    
+        \]
+        Naj bo \(\overline{x}\) dopustna rešitev. Pokažimo \((y_i + c_{ij} - y_j) \overline{x}_e \ge (y_i + c_{ij} - y_j) x_e\):
+        \[
+            \begin{array}{l l}
+                ij \in T: & (y_i + c_{ij} - y_j) \overline{x}_e = (y_i + c_{ij} - y_j) x_e = 0 \\
+                ij \notin T, x_e = 0: & (y_i + c_{ij} - y_j) \overline{x}_e \ge (y_i + c_{ij} - y_j) 0 = 0 \\
+                ij \notin T, x_e = u_e: & (y_i + c_{ij} - y_j) u_e \le (y_i + c_{ij} - y_j) \overline{x}_e \le 0
+            \end{array}    
+        \]
+
+        Seštejemo po vseh povezavah:
+        \[
+            c^T \overline{x} - (A^T y)^T \overline{x} = c^T \overline{x} - y^T A \overline{x} \ge c^T x - (A^T y)^T x = c^T x - y^T A x
+        \]
+        Ker sta \(x\) in \(\overline{x}\) dopustni rešitvi, za obe velja \(Ax=A \overline{x} = b\).
+        \[
+            c^T \overline{x} - y^T b \ge c^T x - y^T b     
+        \]
+        \[
+            c^T \overline{x} \ge c^T x 
+        \]
+        Ker je poljubna dopustna rešitev večja ali enaka \(x\), je \(x\) optimalna.
+    \end{proof}
+
+    Če ne moremo najti izstopajoče povezave, so vse povezave v ciklu preme in \(u_e=\infty\). Podobno kot pri navadnem PR imamo takrat negativen cikel in problem je neomejen. Podobno se postopek zanesljivo ustavi, če uporabimmo Cunninghamovo pravilo (tj. če imamo več kandidatov za izstoopno povezavo, izberemo prvo na poti od korena do vstopne spremenljivke).
+    \par
+    Začetno \textit{ddr} poiščemo na skoraj enak način kot pri navadnem PR: umetnim povezavam damo omejitev \(u_e=\infty\).
+
+    \begin{remark}
+        Pri PRO se lahko zgodi, da je neka povezava vstopna in izstopna naenkrat.
+    \end{remark}
+
+
+    \pagebreak
+    \section{Pretoki in prerezi}
+
+    Naj bo \(G = (V,E\) usmerjen graf. Vsaki povezavi \(e\) smo dali utež \(u_e \in \mathbb{R}^+ \cup \infty\). Eno izmed vozlišč smo označili s \(s\) (kot \"source\"), neko drugo vozlišče pa s \(t\) (kot \"terminal\"). Velja pravilo, da \(s\) ni končno vozlišče nobene povezave, \(t\) pa ni začetno vozlišče nobene povezave.
+    \par
+    Iščemo pretok \((x_e)_{e \in E(G)}\) (angl. flow).
+    \[
+        0 \le x_e \le u_e\ \forall e \in E(G)    
+    \] 
+    Kirchhoffov zakon velja za vsa vozlišča \(v \in V \backslash \{s,t\}\):
+    \[
+        \sum_{K(e)=v} x_e = \sum_{Z(e)=v} x_e   
+    \]
+
+    Iščemo pretok, za katerega je \textbf{prostornina} največja:
+    \[
+        v = \sum_{Z(s)} x_e    
+    \]
+
+    Poglejmo si še enkrat Kirchhoffov zakon:
+    \[
+        \sum_{K(e)=v} x_e = \sum_{Z(e)=v} x_e  
+    \]
+    Seštejmo po vseh vozliščih razen \(s\) in \(t\).
+    \[
+        \sum_{K(e) \neq t} x_e = \sum_{Z(e) \neq s} x_e    
+    \]
+    \[
+        \sum_{Z(e)=s} x_e = \sum_{K(e)=t} x_e = v
+    \]
+
+    Problem se prevede na PRO:
+    \[
+        b_v=0\ \text{za}\ \forall v \in V    
+    \]
+    dodamo povezavo \(ts\): \(u_{ts}=\infty\), \(c_{ts} = -1\), \(c_e=0\ \forall e \in E\).
+    \par
+    Problem lahko rešimo preko simpleksne metode na omrežjih, vendar je bolj primeren \textbf{Ford-Fulkersonov algoritem}.
+
+    \begin{definition}
+        Prerez (angl. cut) je podmnožica \(C \subset V(G)\), za katero je \(s \in C\) in \(t \notin C\).
+    \end{definition}
+
+    Znova si oglejmo posledice Kirchhoffovega zakona:
+    \[
+        \sum_{Z(e)=v} x_e = \sum_{K(e)=v} x_e  
+    \]
+
+    To velja za vsa vozlišča v \(C \backslash \{s\}\), zato seštejemo po vseh teh vozliščih (nobena povezava se ne začne v \(t\) ali konča v \(s\)):
+    \[
+        \sum_{Z(e) \in C \backslash \{s\}} x_e = \sum_{K(e) \in C} x_e    
+    \]
+    Na obeh straneh enačbe odštejemo povezave, ki se začnejo in končajo v \(C \backslash \{s\}\).
+    \[
+        \sum_{\substack{Z(e) \in C \backslash \{s\} \\ K(e) \notin C}} x_e = \sum_{\substack{Z(e) \notin C \backslash \{s\} \\ K(e) \in C}} x_e    
+    \]
+    Oboje premaknemo na eno stran:
+    \[
+         \sum_{\substack{Z(e) \in C \backslash \{s\} \\ K(e) \notin C}} x_e\ - \sum_{\substack{Z(e) \notin C \backslash \{s\} \\ K(e) \in C \backslash \{s\}}} x_e\ = 0 
+    \]
+    Prištejemo \(\displaystyle v = \sum_{Z(e)=s} x_e\):
+    \[
+        v = \sum_{\substack{Z(e) \in C \backslash \{s\} \\ K(e) \notin C}} x_e\ - \sum_{\substack{Z(e) \notin C \backslash \{s\} \\ K(e) \in C}} x_e\ + \sum_{Z(e)=s} x_e
+    \]
+    \[
+        v = \sum_{\substack{Z(e) \in C \backslash \{s\} \\ K(e) \notin C}} x_e\ - \sum_{\substack{Z(e) \notin C \backslash \{s\} \\ K(e) \in C}} x_e\ + \sum_{\substack{Z(e)=s\\ K(e) \notin C}} x_e + \sum_{\substack{Z(e)=s\\ K(e) \in C}} x_e
+    \]
+    \[
+        v = \sum_{\substack{Z(e) \in C \\ K(e) \notin C}} x_e\ - \sum_{\substack{Z(e) \notin C \backslash \{s\} \\ K(e) \in C}} x_e\ + \sum_{\substack{Z(e)=s\\ K(e) \in C}} x_e
+    \]
+    \[
+        v = \sum_{\substack{Z(e) \in C \\ K(e) \notin C}} x_e\ - \sum_{\substack{Z(e) \notin C \\ K(e) \in C}} x_e\ - \sum_{\substack{Z(e)=s \\ K(e) \in C}} x_e\ + \sum_{\substack{Z(e)=s \\ K(e) \in C}} x_e 
+    \]
+
+    \[
+        v = \sum_{\substack{Z(e) \in C \\ K(e) \notin C}} x_e\ - \sum_{\substack{Z(e) \notin C \\ K(e) \in C}} x_e\
+    \]
+    \[
+        v = \sum_{\substack{i \in C \\ j \notin C}} x_{ij}\ -\ \sum_{\substack{i \notin C \\ j \in C}} x_{ij}\
+    \]
+
+    Prostornina pretoka je torej razlika med pretokom, ki odhaja iz \(C\) in pretokom, ki pride v \(C\).
+
+    \begin{definition}
+        Vsota omejitev pretoka po povezavah, ki se začnejo v prerezu \(C\) in se končajo izven \(C\), imenujemo \textbf{kapaciteta prereza} \(C\).
+        \[
+            \sum_{\substack{i \in C \\ j \notin C}} u_{ij} \in \mathbb{R}^+ \cup \infty
+        \]
+    \end{definition}
+
+    Iz pokazanega sledi naslednji izrek.
+    \begin{theorem}
+        Naj bo \(x\) poljubni pretok in \(C\) poljuben prerez omrežja. Potem je prostornina pretoka \(x\) manjša ali kvečjemu enaka kot kapaciteta prereza \(C\). Če sta enaki, je \(x\) maksimalen pretok in \(C\) minimalen prerez.
+    \end{theorem}
+
+    Temu problemu pravimo \textbf{problem minimalnega prereza (min cut)}. Naslednji izrek pove, da v bistvu problemu lahko rečemo \textbf{max flow min cut}.
+
+    \begin{theorem}
+        Velja natanko ena od možnosti:
+        \begin{enumerate}[label=(\alph*)]
+            \item Obstajajo pretoki s poljubno veliko prostornino. Potem imajo vsi prerezi kapaciteto \(\infty\).
+            \item Obstaja max pretok. Njegova prostornina je enaka kapaciteti min prereza.
+        \end{enumerate}
+    \end{theorem}
+
+    \begin{proof}
+        Dokazali bomo preko PRO. Ponovimo: \(u_{ts}=\infty, c_{ts}=-1, c_e=0\ \forall e \in E\). Problem je dopusten, saj je rešitev \(x_e=0\) očitno dopustna.
+        \par
+        Če je problem neomejen, je lahko prostornina poljubno velika. Ker je kapaciteta poljubnega prereza večja od prostornine, mora biti neskončna za vse prereze.
+        \par
+        Če je problem omejen, obstaja maksimalen pretok \(x\). Vemo, da obstaja povezava \(ts\), in zanjo velja \(u_{ts}=\infty\). Povezava \(ts\) zagotovo ni nasičena, torej je \(y_t + c_{ts} = y_t - 1 \ge y_s\) (Če je \(ts\) v drevesu optimalne rešitve, imamo enakost. Sicer je \(x_{ts}=0\) in lahko velja tudi neenakost). Definiramo množico:
+        \[C = \{\ v \in V\ |\ y_v \le y_s \}\]
+        Najprej pokažimo, da je ta množica prerez. \(y_s \le y_s\), torej je \(s \in C\). \(y_t \ge y_s + 1\), torej \(y_t > y_s\), zato \(t \notin C\). \(C\) je torej prerez. Sedaj moramo še pokazati, da sta prostornina pretoka in kapaciteta prereza enaki.
+        \par
+        Prostornina maksimalnega pretoka je
+        \[
+            v = \sum_{\substack{i \in C \\ j \notin C}} x_{ij}\ - \sum_{\substack{i \notin C \\ j \in C}} x_{ij} 
+        \]
+        Vzemimo takšno povezavo \(ij \in E\), da je \(i \in C\) in \(j \notin C\). Potem je \(y_i \le y_s < y_j\). Ker je \(y_i + c_{ij} = y_i + 0 < y_j\), je povezava \(ij\) zasičena, torej je \(x_{ij} = u_{ij}\).
+        \par
+        Vzemimo sedaj še povezavo \(ij \in E\), za katero velja \(i \notin C\) in \(j \in C\). Potem je \(y_i > y_s \ge y_j\). Podobno velja \(y_i > y_j\) in je povezava \(ij\) prazna, torej \(x_{ij} = 0\). Iz obeh opažanj sledi
+        \[
+            v = \sum_{\substack{i \in C \\ j \notin C}} x_{ij}\ - \sum_{\substack{i \notin C \\ j \in C}} x_{ij} = v = \sum_{\substack{i \in C \\ j \notin C}} u_{ij}\ - \sum_{\substack{i \notin C \\ j \in C}} 0 = v = \sum_{\substack{i \in C \\ j \notin C}} u_{ij}
+        \]
+        To pa je ravno kapaciteta prereza \(C\). Ker sta prostornina pretoka in kapaciteta prereza enaki, je \(x\) maksimalni pretok in \(C\) minimalni prerez. 
+    \end{proof}
+
+
+    \subsection{Ford-Fulkersonov algoritem}
+
+    Začnemo s praznim pretokom (\(x_e =  0\) za vse \(e \in E\)).
+
+    \begin{definition}
+        \textbf{Povečujoča pot} (angl. augmenting path) je pot \(v_0 v_1 v_2 ... v_l\), za katero je \(v_0 = s\) in \(v_l = t\) ter za vse primerne \(i\) velja:
+        \[
+            \begin{array}{l l}
+                v_i v_{i+1} \in E(G): & x_{v_i v_{i+1}} < u_{v_i v_{i+1}} \\
+                \text{ali} \\
+                v_{i+1} v_i \in E(G): & x_{v_{i+1} v_i} > 0
+            \end{array}
+        \]
+        tj., preme povezave niso zasičene in obratne povezave niso prazne.
+    \end{definition}
+
+    Po povečujoči poti lahko pretok povečamo toliko, da bomo zasičili oz. izpraznili vsaj eno premo oz. obratno povezavo.
+    \[
+        t = \min \{\ u_e - x_e\ |\ e\ \text{prema}\ \} \cup \{\ x_e\ |\ e\ \text{obratna}\ \}
+    \]
+    Kirchhoffov zakon še vedno velja v vsakem vozlišču: če obe povezavi kažeta v isto smer, se je pretok na obeh povečal za \(t\), , če pa ena kaže v premo, ena pa v obratno smer, pa se je eni povečal, drugi pa zmanjšal pretok za \(t\), zatp je razlika tudi v tem primeru še vedno enaka \(0\).
+    \par
+    Ker smo pretok povečali za minimum možnih povečanj, nismo nobene povezave zmanjšali pod 0 ali nad \(u_e\), zato je pretok po povečanju še vedno dopusten in ima za \(t\) večjo prostornino. Največji pretok smo našli, ko ni več nobene povečujoče poti.
+    \par
+    Povečujočo pot iščemo na takšen način, da hkrati sestavljamo prerez: začnemo z množico \(C=\{s\}\) in dodamo preme sosede, do katerih pridemo preko nezasičene povezave ter obratne sosede, do katerih pridemo preko neprazne povezave. Iz vsakega dodanega vozlišča na isti način dodajamo njihove sosede in se ustavimo tedaj, ko dodamo \(t\), ali pa smo pregledali vsa vozlišča. Če je \(t \in C\), smo našli povečujočo pot. V tem primeru povečamo povezave na poti in ponovimo iskanje poti. Če pa je \(t \notin C\) in ne moremo dodati nobenega vozlišča, pa smo našli prerez \(C\) in končamo. Vse preme povezave, ki vodijo izven \(C\), so zagotovo zasičene, vse obratne povezave, ki vodijo v \(C\), pa so zagotovo prazne. Torej velja:
+    \[
+        v = \sum_{\substack{i \in C \\ j \notin C}} x_{ij}\ -\ \sum_{\substack{i \notin C \\ j \in C}} x_{ij} = \sum_{\substack{i \in C \\ j \notin C}} u_{ij}
+    \]
+    \(C\) ima kapaciteto, enako prostornini pretoka (ker so vse preme povezave s koncem v \(t\) zasičene, obratne pa prazne), torej je \(x\) maksimalni pretok in \(C\) minimalni prerez.
+
+    \begin{remark}
+        Ford-Fulkersonov algoritem se ne konča vedno.
+    \end{remark}
+
+
+
+    \pagebreak
+    \section{Prirejanja in pokritja}
+
+    \begin{definition}
+        Naj bo \(G\) (neusmerjen) graf. \(M \subseteq E(G)\) je \textbf{prirejanje} (angl. matching), če je \(e \cap f = \emptyset\) za vse \(e,f \in M\), \(e \neq f\) (torej množica povezav, ki nimajo skupnih vozlišč). \(P \subseteq V(G)\) je \textbf{pokritje} (angl. cover), če za vse \(e \in E(G)\) obstaja takšen \(v \in P\), da je \(v \in e\) oz. \(e \cap P \neq \emptyset\) (torej množica vozlišč, ki vsebuje vsaj eno vozlišče vsake povezave).
+    \end{definition}
+
+    Iščemo največje prirejanje (velikost označimo \(\mu(G)\)) in najmanjše pokritje (velikost označimo \(\tau(G)\)).
+
+    \begin{proposition}
+        Naj bo \(G\) graf. Potem velja
+        \begin{enumerate}[label=(\alph*)]
+            \item Za vsako prirejanje \(M\) in pokritje \(P\) velja \(|M| \le |P|\).
+            \item Če za prirejanje \(M\) in pokritje \(P\) velja \(|M|=|P|\), potem je \(\mu(G) = \tau(G) = |M| = |P|\).
+            \item Za vsako prirejanje \(M\) in pokritje \(P\) velja \(\mu(G) \le \tau(G)\).
+        \end{enumerate}
+    \end{proposition}
+
+    \begin{proof}[Dokaz \emph{(a)}]
+        Obravnavamo preslikavo \(f\): \(M \to P\), definirano kot \(e \mapsto\) vozlišče v \(P \cap e\). Ker je \(P\) pokritje, je ta preslikava definirana za vse \(e \in M\). Ker je \(M\) prirejanje, je \(f\) injektivna (saj nimata nobeni dve vozlišči skupnega vozlišča), torej je \(|M| \le |P|\).
+    \end{proof}
+
+    \begin{proof}[Dokaz \emph{(b)}]
+        Če velja \(|M|=|P|\), potem \(M\) ne more biti večji, \(P\) pa ne more biti manjši. Zato je res \(\mu(G) = \tau(G) = |M| = |P|\)
+    \end{proof}
+
+    \begin{proof}[Dokaz \emph{(c)}]
+        Ker velja \(|M| \le |P|\) za vsa prirejanja \(M\) in pokritja \(P\), to velja tudi za velikosti največjega prirejanja in najmanjšega pokritja. 
+    \end{proof}
+
+    \begin{remark}
+        V splošnem ni \(\mu(G) = \tau(G)\). Videli bomo, da to velja za dvodelne grafe.
+    \end{remark}
+
+    Kako pa poiščemo največje prirejanje? \\
+    
+    Naj bo \(M\) prirejanje grafa \(G\). Povezavi \(e \in M\) rečemo \textbf{vezana}, povezavi \(e \notin M\) pa \textbf{prosta}. Vozlišče \(v \in V(G)\) je vezano, če je \(v \cap e \neq \emptyset\) za nek \(e \in M\), tj. \(v\) je vozlišče neke povezave v \(M\). Vozlišče \(v \in V(G)\) je prosto, če je \(v \cap e = \emptyset\) za vse \(e \in M\), tj. \(v\) ni vozliŠče nobene povezave v \(M\).
+    
+    \begin{definition}
+        Pot v grafu \(G\) je \textbf{izmenična/alternirajoča} glede na prirejanje \(M\), če se na njej izmenjujejo proste in vezane povezave.
+    \end{definition}
+
+    \begin{definition}
+        Alterirajoča pot je \textbf{povečujoča}, če se začne in konča s prostim vozliščem.
+    \end{definition}
+
+    Spomnimo se operacije Boolove vsote oz. simetrične razlike. Boolova vsota dveh množic \(A\) in \(B\) je množica, ki vsebuje elemente \(A\) in elemente \(B\), ki se ne pojavijo v obeh.
+
+    \begin{proposition}
+        Naj bo \(M\) prirejanje in \(P\) povečujoča pot na grafu \(G\). Potem je \(M^\prime = M \oplus E(P)\) prirejanje in \(|M^\prime| = |M|+1\). 
+    \end{proposition}
+
+    \begin{proof}
+        Vezana vozlišča na povečujoči (torej tudi alternirajoči) poti \(P\) so elementi \(M \cap E(P)\) in zato niso elementi \(M^\prime\). Ker je \(P\) povečujoča pot, se začne in konča s prostim vozliščem, torej se začne in konča s prosto povezavo. Ker je alternirajoča, je število prostih povezav za 1 večje od števila vezanih povezav, torej je \(|M^\prime| = |M|+1\). Povezave v \(M^\prime\) tvorijo enako množico vozlišč kot povezave v \(M\). Ker povezave v \(M\) nimajo skupnih vozlišč, jih tudi povezave v \(M^\prime\) nimajo. \(M^\prime\) je torej prirejanje.
+    \end{proof}
+
+    \begin{theorem}[Bergeov izrek]
+        Prirejanje \(M\) na grafu \(G\) je največje prirejanje natako tedaj, ko na \(M\) ne obstaja nobena povečujoča pot.
+    \end{theorem}
+
+    \begin{proof}[Dokaz \(\implies\)]
+        Če povečujoča pot ne obstaja, potem po prejšnji trditvi ne obstaja prirejanje \(M^\prime\), za katero bi veljalo \(|M^\prime| = |M|+1\). Potem tudi ne obstaja nobeno prirejanje še večje velikosti, ker bi v tem primeru dobili \(M^\prime\) tako, da bi  odstranili poljubne povezave.
+    \end{proof}
+
+    \begin{proof}[Dokaz \(\Longleftarrow\)]
+        Recimo, da obstaja prirejanje \(M^\prime\), ki je večje od nekega prirejanja \(M\). Konstruirajmo graf \(H\), za katerega velja \(V(H)=V(G)\) in \(E(H)=M \oplus M^\prime\). Poglejmo povezane komponente grafa \(H\): med njimi so poti, ki so alternirajoče, saj si dve povezavi v prirejanju nikoli ne delita povezave; druge komponente so pa alternirajoči, in zato sodi cikli. V teh ciklih se pojavi enako število povezav iz \(M\) in \(M^\prime\). Ker pa je \(|M^\prime| > |M|\), mora obstajati vsaj ena pot, ki ima več povezav iz \(M^\prime\) kot \(M\). Takšna pot se začne in konča s povezavo iz \(M^\prime\). Vozlišči na začetku in koncu takšne poti sta prosti glede na \(M\): sicer bi takšno vozlišče bile tako v povezavi iz \(M\) kot v povezavi iz \(M^\prime\), ampak v \(M^\prime\) ne more biti, ker bi si potem dve povezavi iz \(M^\prime\) delili povezavo, a potem \(M^\prime\) ne bi bilo prirejanje. Torej smo našli povečujočo pot glede na \(M\), kar pa je v protislovju s predpostavko, da povečujoča pot ne obstaja.
+    \end{proof}
+
+    Bergeov izrek prevede problem iskanja največjega prirejanja na problem iskanja povečujoče poti. V splošnih grafih ga lahko iščemo s Edmondsovim algoritmom (angl. blossom algorithm), v dvodelnih pa uporabimo \textbf{madžarsko metodo}.
+
+
+
+    \subsection{Madžarska metoda}
+    Naj bo \(G\) dvodelen graf, torej \(V(G)=X \cup Y\), \(X \cap Y = \emptyset\). \\
+    Vzemimo poljubno prirejanje \(M\). Nastavimo \(S:=\) prosta vozlišča v \(X\) in \(T:= \emptyset\). Ponavljamo dodajanje vozlišč v \(S\) in \(T\):
+    \[
+        \begin{array}{ l l }
+            S:= & \text{stari } S \cup \{\ \text{vozlišča v}\ X,\ \text{do katerih pridemo po vezanih povezavah v}\ T\ \} \\
+
+            T:= & \text{stari } T \cup \{\ \text{vozlišča v}\ Y,\ \text{do katerih pridemo po prostih povezavah v}\ S\ \}
+        \end{array}
+    \]
+
+    Ponavljamo, dokler nimamo prostega vozlišča v \(T\), ali pa v zadnji iteraciji nismo dodali nobenega vozlišča (torej \(S = \text{stari}\ S\) in \(T = \text{stari}\ T\)). Če je v \(T\) prosto vozlišče, smo našli povečujočo pot, ki se začne v enem izmed prostih vozlišč v \(X\) (ki je tudi v \(S\)) in konča s prostim vozliščem v \(T\). To pot smo zagotovo našli, ker smo na vsakem koraku dodajanja vozlišč uporabili povezavo, ki po neki poti izhaja iz prostih vozlišč v \(X\). Postopek ponovimo na prirejanju \(M^\prime = M \oplus E(P)\).
+    \par
+    Če v \(T\) ni prostega vozlišča, postopek zaključimo in vrnemo prirejanje \(M\). Našli smo tudi pokritje \(P=(X \backslash S) \cup T\).
+
+    \begin{theorem}
+        Naj bo \(G\) dvodelen graf. Ob zaključku madžarske metode je \(M\) največje prirejanje in \(P=(X \backslash S) \cup T\) najmanjše pokritje. Velja \(|M|=|P|=\mu(G)=\tau(G)\).
+    \end{theorem}
+
+    \begin{proof}
+        Vozlišča razdelimo na štiri podmnožice: \(S\), \(T\), \(X \backslash S\) in \(Y \backslash T\). Med \(S\) in \(Y \backslash T\) ni nobene povezave: če bi bla prosta, bi lahko opravili še eden korak madžarske metode in bi povečali \(T\); ne more biti vezana, ker je vsako vozlišče v \(S\) prosto, ali pa ima povezavo z vozliščem v \(T\) (povezave z \(Y \backslash T\) nima, ker smo ga dodali v \(S\) zaradi vezane povezave, ki je bila v koraku prej že dodana v \(T\)). Med \(X \backslash S\) in \(T\) pa ni vezanih povezav: če bi bila, bi lahko opravili še en korak in povečali \(S\). 
+        \par
+        Definiramo množici
+        \[
+            \begin{array}{l l l}
+                M_1 & = & \{\ e \in M\ |\ e\ \text{povezava med}\ S\ \text{in}\ T\ \} \\
+                M_2 & = & \{\ e \in M\ |\ e\ \text{povezava med}\ X \backslash S\ \text{in}\ Y \backslash T\ \}
+            \end{array}
+        \]
+        Ker med \(X \backslash S\) in \(T\) ni nobene povezave ter med \(S\) in \(Y \backslash T\) ni nobene vezane povezave, je
+        \[
+            M = M_1 \cup M_2
+        \]
+        in ker sta \(M_1\) in \(M_2\) disjunktni, je \(|M|=|M_1|+|M_2|\). Vsa vozlišča v \(T\) so vezana in za vsako je natanko ena povezava vezana, zato je \(|M_1|=|T|\). Podobno, vozlišča v \(X \backslash S\) so tudi vsa vezana, ker smo na začetku v \(S\) vstavili vsa prosta vozlišča v \(X\), zato je \(|M_2|=|X \backslash S|\). Torej je \(|M|=|T| + |X \backslash S\).
+        \par
+        Poglejmo si \(P=(X \backslash S) \cup T\). Vidimo, da je \(|P|=|X \backslash S| + |T| = |M|\). \(P\) je pokritje, ker med \(S\) in \(Y \backslash T\) ni nobene povezave, povezave med \(S\) in \(T\) ter \(X \backslash S\) in \(Y \backslash T\) imajo po eno vozlišče v \(P\), povezave med \(X \backslash S\) in \(T\) pa imajo obe vozlišči v \(P\). Ker je \(|M|=|P|\), je \(M\) največje prirejanje in \(P\) najmanjše pokritje.
+    \end{proof}
+
+    \begin{remark}
+        Za dvodelni graf \(G\) velja \(\mu(G)=\tau(G)\).
+    \end{remark}
+
+    \begin{definition}
+        Prirejanje je \textbf{popolno}, če so vsa vozlišča grafa vezana.
+    \end{definition}
+
+    Graf z lihim številom vozlišč nima popolnega prirejanja, saj vsaka povezava v prirejanju veže dve vozlišči in noben par dveh povezav v prirejanju si ne deli vozlišča.
+
+    \begin{remark}
+        Konigov izrek o plesnih parih govori o \(k\)-regularnih dvodelnih grafih s popolnim prirejanjem.
+    \end{remark}
+
+    \begin{theorem}[Hallov izrek]
+        V dvodelnem grafu \(G=X \cup Y\) obstaja popolno prirejanje iz \(X\) v \(Y\) (vsa vozlišča v \(X\) so vezana) natanko tedaj, ko za vse \(A \subseteq X\) velja \(|A| \le |N(A)|\).
+    \end{theorem}
+
+    \begin{proof}[Dokaz \(\implies\)]
+        Naj za dvodelen graf \(G\) obstaja popolno prirejanje \(M\). Za vsako \(A \subseteq x\) Definiramo preslikavo \(\phi\), ki vsako vozlišče \(x \in X\) slika v vozlišče \(y \in N(A) \subseteq Y\), če je povezava \(xy \in M\). Ker je \(M\) popolno prirejanje, je \(\phi\) definirana za vse \(x \in X\), hkrati pa je injektivna, ker povezava \(xz \notin M\), če je \(xy \in M\).
+    \end{proof}
+
+    \begin{proof}[Dokaz \(\Longleftarrow\)]
+        Na dvodelnem grafu \(G\) uporabimo madžarsko metodo. Vozlišča se razdelijo v množice \(S\), \(T\), \(X \backslash S\) in \(Y \backslash T\), dobimo največje prirejanje \(M\) in najmanjše pokritje \(P\).
+        \par
+        \(S \subseteq X\), zato zanjo velja \(|S| \le |N(S)|\). Ampak vsa vozlišča, ki so sosednja za \(S\), so v \(T\), torej je \(|S| \le |N(S)| \le |T|\). Po končani madžarski metodi je \(|M|=|P|=|X \backslash S| + |T| \ge |X \backslash S| + |S| = |X|\). \(|M| \le |X|\), zato je \(|M| = |X|\), torej je \(M\) popolno prirejanje.
+    \end{proof}
+
+
+
+    \subsection{Minimalno popolno prirejanje (madžarska metoda z utežmi)}
+
+    Imamo polni dvodelni graf \(K_{n,n}\). Vsaka povezava ima utež v \(\mathbb{R} \cup \{- \infty, \infty \}\). \\
+    Uteži izrazimo z matriko \(C = [c_{ij}]_{i,j=1}^n\). Zanima nas popolno prirejanje \(M\) z \(\min (\sum_{i,j \in M} c_{ij})\).
+
+    \begin{remark}
+        Ta problem se pogosto interpretira kot problem razvrščanja (angl. assignment problem).
+    \end{remark}
+
+    \begin{remark}
+        Če rešujemo problem maksimalnega popolnega prirejanja, rešujemo problem minimalnega popolnega prirejanja za \(-C\).
+    \end{remark}
+    
+    \begin{remark}
+        Iščemo permutacijo \(\pi \in S_n\), da je \(\sum_{i=1}^n c_{i \pi(i)}\) minimalna. Če bi iskali ciklično permutacijo, imamo problem potujočega trgovca (angl. travelling salesman).
+    \end{remark}
+
+    \begin{proposition}
+        Problem se ne spremeni, če vrstici ali stolpcu matrike \(C\) prištejemo neko število.
+    \end{proposition}
+
+    \begin{proof}
+        Če neko število prištejemo vrstici \(i\), smo to vrednost prišteli vsem povezavam, ki imajo na levi krajišče \(i\). Vsako popolno prirejanje vsebuje natanko eno od teh povezav. Analogno razmislimo za stolpce.
+    \end{proof}
+
+    Koraki madžarske metode z utežmi (MMU):
+    \begin{enumerate}[label=\arabic*. korak]
+        \item Od vsake vrstice odštejemo najmanjšo vrednost. Od vsakega stolpca odštejemo najmanjšo vrednost. Sedaj so vse uteži \(\ge 0\), v vsaki vrstici in stolpcu je vsaj ena ničla.
+        \item Pogledamo, če obstaja \(n\) ničel, in da je v vsaki vrstici in stolpcu natanko ena. V tem primeru smo našli minimalno popolno prirejanje. Sicer lahko vse ničle pokrijemo z manj kot \(n\) vrsticami in stolpci.
+            \par
+            \(\epsilon := \) najmanjše nepokrito pozitivno število. Od nepokritih števil odštejemo \(\epsilon\), dvakrat pokritim številom pa prištejemo \(\epsilon\). Ta korak ponavljamo, dokler ne dobimo \(n\) ničel tako, da je ena v vsaki vrstici in stolpcu.
+    \end{enumerate}
+
+    2. korak izvedemo z navadno madžarsko metodo (MM), in sicer iščemo največje prirejanje na t.i. "ničelnem grafu". \\
+    Konstruirajmo ničelni graf. To je graf \(H \subseteq K_{n,n}\), za katerega je 
+    \[
+        \begin{array}{ l l l }
+            V(H) & = & \{\ v_1,...,v_n,s_1,...,s_n\ \} \\
+            E(H) & = & \{\ v_i s_j\ |\ c_{ij}=0\ \}
+        \end{array}  
+    \]
+    Vozlišča \(v_i\) predstavljajo vrstice, vozlišča \(s_j\) pa stolpce. Povezave predstavljajo ničelne uteži. \\
+    Na koncu MM se lahko zgodi dvoje:
+    \begin{itemize}
+        \item \(M\) je popolno prirejanje oz. \(|M|=n\). \(M\) je tudi minimalno popolno prirejanje.
+        \item \(M\) ni popolno prirejanje oz. \(|P| = |M| < n\). Ker je \(P\) pokritje, smo našli manj kot \(n\) vrstic in stolpcev, ki vsebujejo vse ničle.
+    \end{itemize}
+
+    Vsem vrsticam v \(P\) (torej v \(X \backslash S\)) prištejemo \(\epsilon\), vsem stolpcem, ki niso v \(P\) (torej v \(Y \backslash T\)) odštejemo \(\epsilon\) (v \(P\) so stolpci v \(T\) in vrstice v \(X \backslash S\)). \\
+    Zakaj se postopek ustavi? \\
+    Povezave med \(X \backslash S\) in \(T\) izginejo, ker smo povezavam s krajiščem v \(X \backslash S\) prišteli \(\epsilon\), torej za te povezavo ni več \(c_{ij} = 0\). Se je pa pojavila vsaj ena povezava med \(S\) in \(Y \backslash T\), ker smo stolpcem v \(Y \backslash T\) odšteli \(\epsilon\), ki je definiran kot najmanjše nepokrito število - nepokrita števila so pa ravno uteži povezav z vozliščema v \(Y \backslash T\) in \(S\). V povezavi \(xy\) (\(x \in S\), \(y \in Y \backslash T\)) je nastala ničla \(c_{xy}=0\).
+    \par
+    \(M\) je še vedno prirejanje v novem grafu. Na tem novem grafu in prirejanju \(M\) znova izvedemo MM: v nekem koraku dodamo \(x\) V \(S\), in takoj zatem še \(y\) v \(T\), ker do \(y\) pridemo iz \(x\) po prosti povezavi. 
+    \[
+        \begin{array}{ l l }
+            y\ \text{prosto vozlišče:} & \text{našli smo povečujočo pot.}\ M\ \text{se poveča.} \\
+            y\ \text{vezano vozlišče:} & \text{nadaljujemo MM.}\ S\ \text{se je povečal.}
+        \end{array}    
+    \]
+    \(S\) se lahko poveča največ \(n\)-krat, preden zmanjka povezav v \(X\). MMU se torej konča v največ \(n(n+1)\) korakih.
+
+
+
+    \pagebreak
+    \section{Konveksna optimizacija}
+
+    \begin{definition}
+        Množica \(K \subseteq \mathbb{R}^n\) je \textbf{konveksna}, če je zveznica med poljubnima točkama v \(K\) celotna v \(K\).
+    \end{definition}
+
+    \begin{definition}
+        Množica \(K \subseteq \mathbb{R}^n\) je \textbf{konveksna}, če za vse \(x,y \in K\) in \(\lambda \in [0,1]\) velja:
+        \[
+            (1-\lambda)x + \lambda y \in K    
+        \]
+        Ekvivalentno, za vse \(\lambda, \mu \ge 0\), \(\lambda + \mu = 1\) velja \(\lambda x + \mu y \in K\).
+    \end{definition}
+
+    \begin{proposition}
+        Poljuben presek konveksnih množic je konveksna množica.
+    \end{proposition}
+
+    \begin{proof}
+        Imamo konveksne množice \(A_i\). \\
+        Vzamemo \(x,y \in \bigcap A_i\) in \(\lambda \in [0,1]\). Za vsak \(A_i\) velja \((1-\lambda) x + \lambda y \in A_i\). 
+        Ker to velja za vse \(A_i\), velja tudi za \(\bigcap A_i\), torej \((1-\lambda) x + \lambda y \in \bigcap A_i\).
+    \end{proof}
+
+    \begin{definition}
+        \textbf{Konveksna kombinacija} vektorjev \(x_1,...x_k\) je \(\lambda_1 x_1 + ... + \lambda_k x_k\) za \(\lambda_1,...,\lambda_k \ge 0\), \(\lambda_1 + ... + \lambda_k=1\).
+    \end{definition}
+
+    \begin{proposition}
+        V konveksni množici \(K\) je vsaka konveksna kombinacije vektorjev iz \(K\) tudi v \(K\).
+    \end{proposition}
+
+    \begin{proof}
+        Dokažemo z indukcijo na številu vektorjev v konveksni kombinaciji. Za \(k=1\) in \(k=2\) vemo iz definicije konveksnosti. Predpostavimo, da je konveksna kombinacija \(k-1\) vektorjev v \(K\) tudi v \(K\). \\
+        Vzamemo poljubno konveksno kombinacijo \(\lambda_1 x_1 + ... + \lambda_k x_k\). Če je \(\lambda_k = 1\), so druge \(\lambda_i = 0\), zato je \(\lambda_1 x_1 + ... + \lambda_k x_k = x_k \in K\). Preverimo še primer, ko je \(\lambda_k < 1\). \(\lambda_1 x_1 + ... + \lambda_{k-1} x_{k-1}\) ni konveksna kombinacija, saj je \(\lambda_1 + ... + \lambda_{k-1} \le 1\), vendar to lahko popravimo. Velja \(\lambda_1 + ... + \lambda_{k-1} = 1 - \lambda_k\). Delimo celotno enačbo z \(1-\lambda_k\) in dobimo \(\frac{\lambda_1}{1-\lambda_k} + ... + \frac{\lambda_{k-1}}{1-\lambda_k} = \frac{\lambda_k}{1-\lambda_k}=1\). Torej je \(\frac{\lambda_1}{1-\lambda_k} x_1 + ... + \frac{\lambda_1}{1-\lambda_k} x_{k-1}\) konveksna kombinacija in po indukcijski predpostavki \(\frac{\lambda_1}{1-\lambda_k} x_1 + ... + \frac{\lambda_1}{1-\lambda_k} x_{k-1} \in K\). Prvotna kombinacija je \((1-\lambda_k) (\frac{\lambda_1}{1-\lambda_k} x_1 + ... + \frac{\lambda_k}{1-\lambda_k} x_{k-1}) + \lambda_k x_k \in K\).
+    \end{proof}
+
+    \begin{definition}
+        \textbf{Konveksna ogrinjača} množice vektorjev \(A \mathbb{R}^n\) je
+        \[
+            C(A)=\bigcap_{\substack{K\ \text{konv.} \\ A \subseteq K}} K
+        \]
+    \end{definition}
+
+    \begin{proposition}[Karakterizacija konveksnih ogrinjač]
+        \(\) \\
+        \begin{enumerate}[label=(\arabic*)]
+            \item \(A \subseteq C(A)\)
+            \item \(C(A)\) je konveksna.
+            \item \(A \subseteq B^{\text{konv.}} \implies C(A) \subseteq B\)
+            \item \(A^{\text{konv.}} \implies C(A)=A\)
+            \item \(C(A) = \{\ \text{konveksne kombinacije točk iz}\ A\ \}\) 
+        \end{enumerate}
+    \end{proposition}
+        
+    \begin{proof}[Dokaz \emph{(1)}]
+        Presek množic, ki vsebujejo \(A\), vsebuje \(A\). Zato je 
+        \[
+            C(A)=\bigcap_{\substack{K\ \text{konv.} \\ A \subseteq K}} K \supseteq A  
+        \]
+    \end{proof}
+
+    \begin{proof}[Dokaz \emph{(2)}]
+        \(C(A)\) je presek konveksnih množic, torej je konveksna množica.
+    \end{proof}
+
+    \begin{proof}[Dokaz \emph{(3)}]
+        \(C(A)\) je presek vseh konveksnih množic, ki vsebujejo \(A\). Med njimi je tudi \(B\). Torej je \(C(A) \subseteq B\).
+    \end{proof}
+
+    \begin{proof}[Dokaz \emph{(4)}]
+        \(C(A)\) je presek vseh konveksnih množic, ki vsebujejo \(A\). Ker je \(A\) konveksna, je \(A\) tudi ena izmed teh množic, in ker je vsebovana v vseh ostalih množicah v preseku, je \(C(A)=A\).
+    \end{proof}
+
+    \begin{proof}[Dokaz \emph{(5)}]
+        \[
+            (1-\lambda) \sum_{i=1}^k \lambda_i x_i + \lambda \sum_{i=1}^k \lambda_i^\prime x_i^\prime    
+        \]
+        je konveksna kombinacija točk iz množice konveksnih kombinacij tok iz \(A\):
+        \[
+            (1-\lambda) \sum_{i=1}^k \lambda_i + \lambda \sum_{i=1}^k \lambda_i^\prime = (1-\lambda) \cdot 1 + \lambda \cdot 1 = 1    
+        \]
+        Množica konveksnih kombinacij točk iz \(A\) je torej konveksna, kar pomeni, da vsebuje \(A\). \\
+        Naj bodo \(x_1,...,x_k \in A \subseteq C(A)\). Ker je \(C(A)\) konveksna, je tudi vsaka konveksna kombinacija \(\lambda_1 x_1 + ... + \lambda_k x_k \in C(A)\), torej \(C(A)\) vsebuje vse konveksne kombinacije točk iz \(A\). Ker pa množica konveksnih kombinacij vsebuje \(A\), sledi, da sta \(C(A)\) in množica konveksnih kombinacij točk iz \(A\) enaki.
+    \end{proof}
+
+    \begin{definition}
+        \(x\) je \textbf{ekstremna točka} v konveksni množici \(K\), če ne obstajajo \(x_1,x_2 \in K\), \(\lambda \in (0,1)\):
+        \[
+            x = (1-\lambda) x_1 + \lambda x_2    
+        \]
+        Torej, ekstremna točka ne leži v notranosti nobene zveznice med dvema točkama v \(K\).
+    \end{definition}
+
+    \begin{definition}
+        \textbf{Afina kombinacija} dveh točk \(x,y\) je \((1-\lambda) x + \lambda y\) za vse \(\lambda \in \mathbb{R}\). \\
+        Ekvivalentno, \(\lambda x + \mu y\) za \(\lambda, \mu \in \mathbb{R}\), za katera je \(\lambda + \mu = 1\).
+        Afina kombinacija točk \(x_1,...,x_k\) je \(\lambda_1 x_1 + ... + \lambda_k x_k\), kjer je \(\lambda_1 + ... + \lambda_k = 1\).
+    \end{definition}
+
+    \begin{definition}
+        Množica \(A\) je \textbf{afina}, če je za vse \(x,y \in A\) in \(\lambda \in \mathbb{R}\): \((1-\lambda) x + \lambda y \in A\).
+    \end{definition}
+
+    \begin{proposition}
+        Naslednje trditve so ekvivalentne:
+        \begin{enumerate}[label=(\arabic*)]
+            \item \(A\) je afina.
+            \item Vsaka afina kombinacija točk iz \(A\) je v \(A\).
+            \item \(A = V + a\), \(V \le \mathbb{R}^n\) vektorski podprostor
+        \end{enumerate}
+    \end{proposition}
+
+    \begin{proof}[Dokaz \emph{(1)} \(\implies\) \emph{(2)}]
+        Dokažimo z indukcijo na številu členov v kombinaciji \(k\): za \(k=1\) in \(k=2\) že vemo. Predpostavimo, da je afina kombinacija s \(k-1\) členi iz \(A\) v \(A\). \\
+        Poglejmo afino kombinacijo \(\lambda_1 x_1 + ... + \lambda_k x_k\). Brez škode za splošnost predpostavimo, da \(\lambda_k \neq 1\). 
+        \[
+            (1-\lambda_k) (\frac{\lambda_1}{1-\lambda_k} x_1 + ... + \frac{\lambda_{k-1}}{1-\lambda_k} x_{k-1}) + \lambda_k x_k \in A    
+        \]
+
+    \end{proof}
+
+    \begin{proof}[Dokaz \emph{(2)} \(\implies\) \emph{(3)}]
+        Vzemimo poljuben \(a \in A\). Definiramo \(V := \{\ x-a\ |\ x \in A\ \}\). Dokazati moramo, da je \(V\) vektorski podprostor v \(\mathbb{R}^n\). \\
+        \[
+            \lambda (x-a) + \mu (y-a) = \lambda x + \mu y + (\lambda + \mu) a = \lambda x + \mu y + (1 - \lambda - \mu) a - a \in A - a = V     
+        \]
+    \end{proof}
+
+    \begin{proof}[Dokaz \emph{(3)} \(\implies\) \emph{(1)}]
+        \(A = V  + a\) \\
+        \[
+            (1-\lambda) (x+a) + \lambda (y+a) = (1-\lambda) x + \lambda y + (1-\lambda) a + \lambda a = (1-\lambda) x + \lambda y + a \in A
+        \]
+    \end{proof}
+
+
+
+    \subsection{Konveksni stožci in Farkaseva lema}
+
+    \begin{definition}
+        Množica \(S \subseteq \mathbb{R}^n\) je \textbf{konveksni stožec}, če za vse \(x,y \in S\), \(\lambda, \mu \ge 0\) velja \(\lambda x + \mu y \in S\).
+    \end{definition}
+
+    \begin{remark}
+        Konveksni stožev je konveksna množica.
+    \end{remark}
+
+    \begin{definition}
+        \(S(a_1,...a_k) = \{\ \lambda_1 a_1 + ... + \lambda_k a_k\ |\ \lambda_1,...,\lambda_k \ge 0\ \}\)
+    \end{definition}
+
+    \begin{proposition}
+        \(S(a_1,...,a_k)\) je konveksni stožec. Imenujemo ga konveksni stožec, ki ga napenjajo \(a_1,...a_k\).
+    \end{proposition}
+
+    \begin{proof}
+        \[
+            \lambda (\lambda_1 a_1 + ... + \lambda_k a_k) + \mu (\mu_1 a_1 + ... + \mu_k a_k)
+        \]
+        Za vse \(i\) je \(\lambda \lambda_i + \mu \mu_i \ge 0\).
+        \[
+            (\lambda \lambda_1 + \mu \mu_1) a_1 + ... + (\lambda \lambda_k + \mu \mu_k) a_k \in S(a_1,...,a_k)
+        \]
+    \end{proof}
+
+    \begin{definition}
+        Naj bo \(A \subseteq \mathbb{R}^n\).
+        \[
+            A^* = \{\ x \in \mathbb{R}^n\ |\ x^T a \ge 0\ \text{za vse}\ a \in A\ \}
+        \]
+        \(A^*\) vsebuje vse vektorje, ki tvorijo ostri kot \(\phi \in [-\pi / 2, \pi / 2]\) z vsemi vektorji iz \(A\).
+    \end{definition}
+
+    \begin{proposition}
+        \(A^*\) je konveksni stožec. Ienujemo ga \textbf{dualni stožec}.
+    \end{proposition}
+
+    \begin{proof}
+        Vzamemo poljubne \(x,y \in A^*\), \(\lambda, \mu \ge 0\). Potem za vse \(a \in A\) velja:
+        \[
+            (\lambda x + \mu y)^T a = \lambda x^T a + \mu y^T a \ge 0
+        \]
+    \end{proof}
+
+    \begin{proposition}
+        \(S^*(a_1,...,a_k) = \{\ x \in \mathbb{R}^n\ |\ x^T a_i \ge 0\ \text{za}\ i=1,..,k\ \}\)
+    \end{proposition}
+
+    \begin{proof}
+        Za vse \(x\) in \(\lambda_1,...,\lambda_k \ge 0\) velja
+        \[
+            x^T (\lambda_1 a_1 + ... + \lambda_k a_k) = \lambda_1 x^T a_1 + ... + \lambda_k x^T a_k \ge 0
+        \]
+        Torej \(S^*(a_1,...,a_k)\) vsebuje desno stran.
+        Ker so vse \(\lambda_i \ge 0\), je tudi \(x^T a_i \ge 0\) za \(i=1,...,k\), torej tudi leva stran vsebuje desno. Med levo in desno stranjo velja enakost.
+    \end{proof}
+
+    \begin{remark}
+        V splošnem \(A^{**} \neq A\), velja pa \(A \subseteq A^{**}\).
+    \end{remark}
+
+    \begin{theorem}[Farkaseva lema, geometrijska oblika]
+        \(S^{**}(a_1,...,a_k)=S(a_1,...,a_k)\)
+    \end{theorem}
+
+    \begin{proof}
+        Da \(S(a_1,...,a_k) \subseteq S^{**}(a_1,...,a_k)\), že vemo. Pokazati moramo še obratno vsebovanost. \\
+
+    \end{proof}
 \end{document}

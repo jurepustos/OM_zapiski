@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.6.9)  11 JUL 2020 18:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.6.9)  18 JUL 2020 15:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -438,67 +438,122 @@ Overfull \hbox (3.09727pt too wide) in paragraph at lines 390--391
 
 [5
 
-] [6] [7
+]
+Underfull \hbox (badness 10000) in paragraph at lines 403--405
+
+ []
+
+[6] [7
 
 ] [8]
-Underfull \hbox (badness 10000) in paragraph at lines 610--611
+Underfull \hbox (badness 10000) in paragraph at lines 611--612
 
  []
 
 
-Overfull \hbox (5.9745pt too wide) in paragraph at lines 612--613
+Overfull \hbox (5.9745pt too wide) in paragraph at lines 613--614
 []\OT1/cmr/m/it/10.95 Kak^^Tsne so vre-dno-sti du-alne op-ti-malne re^^Tsitve? $\OML/cmm/m/it/10.95 y[]$ \OT1/cmr/m/it/10.95 je enak ko-e-fi-ci-entu pri do-da-tni spre-men-ljivki,
  []
 
 [9] [10] [11] [12]
-Overfull \hbox (2.97806pt too wide) in paragraph at lines 837--838
+Overfull \hbox (2.97806pt too wide) in paragraph at lines 838--839
 []\OT1/cmr/m/n/10.95 Predpostavimo, da igralca igrata po na^^Tcelu naj-manj^^Tsega tve-ga-nja. De-fi-ni-ramo $\OML/cmm/m/it/10.95 M[] \OT1/cmr/m/n/10.95 =$ vre-dnost
  []
 
 [13]
-Underfull \hbox (badness 10000) in paragraph at lines 886--888
+Underfull \hbox (badness 10000) in paragraph at lines 887--889
 
  []
 
 [14] [15]
-Overfull \hbox (6.21155pt too wide) in paragraph at lines 1085--1086
+Overfull \hbox (6.21155pt too wide) in paragraph at lines 1086--1087
 \OT1/cmr/bx/n/10.95 Trditev 3.17. []\OT1/cmr/m/it/10.95 Ce $\OML/cmm/m/it/10.95 j$\OT1/cmr/m/it/10.95 -ti stol-pec pla^^Tcilne ma-trike do-mi-nira $\OML/cmm/m/it/10.95 j[]$\OT1/cmr/m/it/10.95 -ti stol-pec, se vre-dnost igre ne spre-meni,
  []
 
 [16] [17] [18]
-Overfull \hbox (9.18634pt too wide) in paragraph at lines 1206--1207
+Overfull \hbox (9.18634pt too wide) in paragraph at lines 1207--1208
 \OT1/cmr/bx/n/10.95 Opomba. \OT1/cmr/m/it/10.95 Gozdu (grafu, v ka-te-rem so po-ve-zane kom-po-nente dre-vesa) do-damo po-ve-zave z raz-vo-zom
  []
 
 [19]
-Overfull \hbox (4.92883pt too wide) in paragraph at lines 1214--1215
+Overfull \hbox (4.92883pt too wide) in paragraph at lines 1215--1216
 []\OT1/cmr/m/n/10.95 Naj bo $\OML/cmm/m/it/10.95 e \OT1/cmr/m/n/10.95 = \OML/cmm/m/it/10.95 ij$ \OT1/cmr/m/n/10.95 vsto-ppajo^^Tca po-ve-zava. Neko vo-zli^^Ts^^Tce v $\OML/cmm/m/it/10.95 G$ \OT1/cmr/m/n/10.95 ozna^^Tcimo kot ko-ren in ga po-i-me-nu-jemo
  []
 
 
-Overfull \hbox (0.88606pt too wide) in paragraph at lines 1257--1258
+Overfull \hbox (0.88606pt too wide) in paragraph at lines 1258--1259
 []$\OML/cmm/m/it/10.95 T[]$ \OT1/cmr/m/n/10.95 vse-buje ume-tne po-ve-zave, in vse z ni^^Tcelnim raz-vo-zom. Od-stra-nimo vse ume-tne po-ve-zave
  []
 
-[20] [21]
-Overfull \hbox (4.13132pt too wide) in paragraph at lines 1330--1331
+[20]
+Overfull \hbox (0.18753pt too wide) in paragraph at lines 1333--1334
+\OT1/cmr/bx/n/10.95 Trditev 4.9. \OT1/cmr/m/it/10.95 Naj bo $\OML/cmm/m/it/10.95 A \OMS/cmsy/m/n/10.95 2 \U/msb/m/n/10.95 R[]$ \OT1/cmr/m/it/10.95 dvojno sto-ha-sti^^Tcna ma-trika. Po-tem ob-staja tak^^Tsna per-mu-ta-cij-ska
+ []
+
+[21]
+Underfull \hbox (badness 10000) in paragraph at lines 1355--1358
+
+ []
+
+
+Overfull \hbox (4.13132pt too wide) in paragraph at lines 1391--1392
 []\OT1/cmr/m/n/10.95 Izbira iz-sto-pajo^^Tce po-ve-zave je od-vi-sna od na^^Tcina, na ka-te-rega smo iz-brali vsto-pajo^^Tco po-ve-zavo. 
  []
 
-[22] (d:/Documents and projects/Latex/OM/skripta.aux) ) 
+[22] [23] [24] [25] [26] [27]
+Underfull \hbox (badness 10000) in paragraph at lines 1651--1652
+
+ []
+
+
+Overfull \hbox (2.63464pt too wide) in paragraph at lines 1682--1683
+[]\OT1/cmr/m/n/10.95 Recimo, da ob-staja pri-re-ja-nje $\OML/cmm/m/it/10.95 M[]$\OT1/cmr/m/n/10.95 , ki je ve^^Tcje od ne-kega pri-re-ja-nja $\OML/cmm/m/it/10.95 M$\OT1/cmr/m/n/10.95 . Kon-stru-i-rajmo
+ []
+
+[28] [29]
+Overfull \hbox (9.07289pt too wide) in paragraph at lines 1763--1764
+\OT1/cmr/bx/n/10.95 Opomba. \OT1/cmr/m/it/10.95 Ta pro-blem se po-go-sto in-ter-pre-tira kot pro-blem razvr^^Ts^^Tcanja (angl. as-si-gnment pro-blem). 
+ []
+
+
+Overfull \hbox (17.22534pt too wide) in paragraph at lines 1767--1768
+\OT1/cmr/bx/n/10.95 Opomba. []\OT1/cmr/m/it/10.95 Ce re^^Tsujemo pro-blem ma-ksi-mal-nega po-pol-nega pri-re-ja-nja, re^^Tsujemo pro-blem mi-ni-mal-nega
+ []
+
+[30] [31]
+Underfull \hbox (badness 10000) in paragraph at lines 1866--1867
+
+ []
+
+[32]
+Underfull \hbox (badness 10000) in paragraph at lines 1944--1945
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1951--1952
+
+ []
+
+[33]
+Underfull \hbox (badness 10000) in paragraph at lines 2028--2029
+
+ []
+
+[34] (d:/Documents and projects/Latex/OM/skripta.aux) ) 
 Here is how much of TeX's memory you used:
- 6164 strings out of 480478
- 91263 string characters out of 5903486
- 364002 words of memory out of 5000000
- 22113 multiletter control sequences out of 15000+600000
+ 6169 strings out of 480478
+ 91317 string characters out of 5903486
+ 365002 words of memory out of 5000000
+ 22118 multiletter control sequences out of 15000+600000
  544713 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,13n,43p,770b,353s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
-Output written on "d:/Documents and projects/Latex/OM/skripta.pdf" (22 pages, 273951 bytes).
+ 38i,13n,43p,1105b,353s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
+Output written on "d:/Documents and projects/Latex/OM/skripta.pdf" (34 pages, 340423 bytes).
 PDF statistics:
- 157 PDF objects out of 1000 (max. 8388607)
- 111 compressed objects within 2 object streams
+ 199 PDF objects out of 1000 (max. 8388607)
+ 140 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
