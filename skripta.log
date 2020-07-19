@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.6.9)  18 JUL 2020 15:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.6.9)  19 JUL 2020 02:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -535,12 +535,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 1951--1952
 
  []
 
-[33]
-Underfull \hbox (badness 10000) in paragraph at lines 2028--2029
+[33] [34]
+Overfull \hbox (7.46237pt too wide) in paragraph at lines 2084--2086
+[]\OT1/cmr/m/it/10.95 Ce $\OML/cmm/m/it/10.95 b$ \OT1/cmr/m/it/10.95 ni b kon-ve-ksnem sto^^Tzcu, ki ga na-pe-njajo $\OML/cmm/m/it/10.95 a[]; :::; a[]$\OT1/cmr/m/it/10.95 , po-tem $\OML/cmm/m/it/10.95 b$ \OT1/cmr/m/it/10.95 od $\OML/cmm/m/it/10.95 a[]; :::; a[]$ \OT1/cmr/m/it/10.95 lo^^Tci neka hi-per-rav-nina.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2129--2131
 
  []
 
-[34] (d:/Documents and projects/Latex/OM/skripta.aux) ) 
+[35] [36] (d:/Documents and projects/Latex/OM/skripta.aux) ) 
 Here is how much of TeX's memory you used:
  6169 strings out of 480478
  91317 string characters out of 5903486
@@ -550,10 +555,10 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  38i,13n,43p,1105b,353s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb><c:/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb>
-Output written on "d:/Documents and projects/Latex/OM/skripta.pdf" (34 pages, 340423 bytes).
+Output written on "d:/Documents and projects/Latex/OM/skripta.pdf" (36 pages, 347069 bytes).
 PDF statistics:
- 199 PDF objects out of 1000 (max. 8388607)
- 140 compressed objects within 2 object streams
+ 205 PDF objects out of 1000 (max. 8388607)
+ 144 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -2026,6 +2026,131 @@
 
     \begin{proof}
         Da \(S(a_1,...,a_k) \subseteq S^{**}(a_1,...,a_k)\), že vemo. Pokazati moramo še obratno vsebovanost. \\
-
+        Vzamemo \(b \in S^{**}(a_1,...,a_k)\). Velja \(x^T b \ge 0\) za vse \(x \in S^*(a_1,...,a_k)\). \\
+        Za vsak \(x \in S^*(a_1,...,a_k)\) velja \(x^T a_i \ge 0\) za vse \(i=1,...,k\). \\
+        Dokazati hočemo, da je \(b \in S(a_1,...,a_k)\), torej \(\lambda_1 a_1 + ... + \lambda_k a_k = b\) za \(\lambda_1,...,\lambda_k \ge 0\). \\
+        Definiramo matriko \(A = [\ a_1\ ... a_k\ ]\ \). Iščemo rešitev za \(A \lambda = b\). Formuliramo kot LP:
+        \[
+            \begin{array}{l l}
+                max & 0^T \lambda \\
+                p.p. & A \lambda = b \\
+                & \lambda \ge 0
+            \end{array}  
+        \]
+        Trdimo, da je ta LP dopusten. Najprej poglejmo dual tega programa:
+        \[
+            \begin{array}{l l}
+                min & b^T y \\
+                p.p. & A^T y \ge 0
+            \end{array}
+        \]
+        Dual je dopusten: \(y=0\) je dopustna rešitev. Vse dopustne rešitve morajo ustrezati pogoju:
+        \[
+            A^T y = 
+            \begin{bmatrix}
+                a_1 \\
+                \cdot \\
+                \cdot \\
+                a_k
+            \end{bmatrix}
+            \begin{bmatrix}
+                y_1 \\
+                \cdot \\
+                \cdot \\
+                y_k
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+                a_1^T y_1 \\
+                \cdot \\
+                \cdot \\
+                a_k^T y_k
+            \end{bmatrix}
+            \ge 0
+        \]
+        Za vse dopustne \(y\) torej velja \(y \in S^*(a_1,...a_k)\). Velja tudi \(b^T y \ge 0\), torej je dualni LP optimalen. Potem pa je tudi originalni LP optimalen. Torej \(A \lambda = b\) ima rešitev, torej je \(b \in S(a_1,...,a_k)\).
     \end{proof}
+
+
+    \begin{theorem}[Farkaseva lema, 1. algebraična oblika]
+        Naj bo \(A \in \mathbb{R}^{n \times k}\) in \(b \in \mathbb[R]^n\). Potem obstaja tak \(x \ge 0\), da je \(Ax = b\) natanko takrat, ko za vse \(y \in \mathbb{R}^n\) velja \(A^T y \ge 0 \implies b^T y \ge 0\)
+    \end{theorem}
+
+    \begin{theorem}[Farkaseva lema, 2. algebraična oblika]
+        Naj bo \(A \in \mathbb{R}^{n \times k}\) in \(b \in \mathbb[R]^n\). Potem obstaja tak \(x \ge 0\), da je \(Ax \le b\) natanko takrat, ko za vse \(y \in \mathbb{R}^n\), \(y \ge 0\) velja \(A^T y \ge 0 \implies b^T y \ge 0\)
+    \end{theorem}
+
+    \begin{remark}
+        Še ena interpretacija Farkaseve leme: \(b \notin S(a_1,...,a_k) \implies b \notin S^{**}(a_1,...,a_k)\). \\
+        Če \(b\) ni b konveksnem stožcu, ki ga napenjajo \(a_1,...,a_k\), potem \(b\) od \(a_1,...,a_k\) loči neka hiperravnina. \(b\) je na eni strani te ravnine, točke \(a_1,...,a_k\) pa na drugi.
+    \end{remark}
+
+
+
+    \subsection{Konveksne funkcije}
+
+    \begin{definition}
+        Naj bo \(K \subseteq \mathbb{R}^n\) konveksna množica. \\
+        \(f\): \(K \to R\) je \textbf{konveksna funkcija}, če za vse \(x,y \in K\), \(\lambda \in [0,1]\) velja:
+        \[
+            f((1-\lambda) x + \lambda y) \le (1-\lambda) f(x) + \lambda f(y)
+        \]
+    \end{definition}
+
+    \begin{remark}
+        Funkcija ene spremenljivke je konveksna, če je definirana na intervalu in leži njej graf v celoti pod zveznico robnih točk na grafu.
+    \end{remark}
+
+    \begin{definition}
+        \(f\): \(K^{konv} \to \mathbb{R}\) je \textbf{konkavna}, e za vse \(x,y \in K\), \(\lambda \in [0,1]\) velja:
+        \[
+            f((1-\lambda) x + \lambda y) \ge (1-\lambda) f(x) + \lambda f(y)
+        \]
+    \end{definition}
+
+    \begin{definition}
+        \(f(x)=a_1 x_1 + ... + a_n x_n + b = a^T x + b\) je \textbf{afina funkcija}.
+    \end{definition}
+
+    \begin{proposition}
+        \(f\): \(K \to \mathbb{R}\) je afina natanko takrat, ko je konveksna in konkavna.
+    \end{proposition}
+
+    \begin{proof}[Dokaz \(\implies\)]
+        \[
+            f((1-\lambda) x + \lambda y) = a^T ((1-\lambda) x + \lambda y) + b = (1-\lambda) a^T x + \lambda a^T y + b    
+        \]
+        \[
+            (1-\lambda) f(x) + \lambda f(y) = (1-\lambda) (a^T x + b) + \lambda (a^T y + b) = (1-\lambda) a^T x + \lambda a^T y + b     
+        \]
+    \end{proof}
+    
+    \begin{proof}[Dokaz \(\Longleftarrow\)]
+        Imamo konveksno in konkavno funkcijo \(f\): \(K \to \mathbb{R}\). Definiramo \(b := f(0)\) in \(g(x) := f(x) - b\). Pokazati hočemo, da je \(g\) linearna. \\
+        Vidimo, da je \(g(0)=f(0)-b = b-b - 0\). \\
+        \[
+            \begin{array}{l l}
+                g((1-\lambda) x + \lambda y) & = f((1-\lambda) x + \lambda y) - b \\
+                & = (1-\lambda)\ f(x) + \lambda f(y) - b \\
+                & = (1-\lambda)\ (f(x) - b) + \lambda (f(y) - b) \\
+                & = (1-\lambda)\ g(x) + \lambda g(y)
+            \end{array}    
+        \]
+        Nastavimo \(y = 0\). \(g((1-\lambda) x) = (1-\lambda) g(x)\) oz. \(g(\alpha x) = \alpha g(x)\) za \(\alpha \in [0,1]\). \\
+        Kaj pa, če je \(\alpha > 1\)? Ker je \(\frac{1}{\alpha} \in  [0,1]\), je \(g(x) = g(\frac{1}{\alpha} \alpha x) = \frac{1}{\alpha} g(\alpha x)\). Torej je \(g(\alpha x) = \alpha g(x)\) za \(\alpha \in [0, \infty)\). \\
+        Homogenost smo pokazali za \(\alpha \in [0, \infty)\). Dokazati jo moramo še za \(\alpha < 0\).
+        \[
+            0 = g(\frac{1}{2} x + (-\frac{1}{2} x)) = \frac{1}{2} g(x) + \frac{1}{2} g(-x)    
+        \]
+        Sledi, da je \(g(-x)=-g(x)\). Torej je \(g(\alpha x) = g(- (-\alpha x)) = - g(-\alpha x) = - (-\alpha) g(x) = \alpha g(x)\). \\
+        Homogenost smo dokazali v celoti: \(g(\alpha x) = \alpha g(x)\) za vse \(\alpha \in \mathbb{R}\). \\
+        Pokažimo še aditivnost:
+        \[
+            \frac{1}{2} g(x + y) = g(\frac{1}{2} x + \frac{1}{2} y) = \frac{1}{2} g(x) + \frac{1}{2} g(y)
+        \]
+        Iz tega je razvidno, da je \(g(x + y) = g(x) + g(y)\), torej je \(g\) aditivna, in ker je tudi homogena, je linearna, torej je oblike \(g(x) = a^T x\). Ker je \(g(x) = f(x) - b\), je \(f(x) = g(x) + b\), torej \(f(x) = a^T x + b\). \(f\) je afina funkcija.
+    \end{proof}
+    
+
+
 \end{document}

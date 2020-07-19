@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1595080603 "d:/Documents and projects/Latex/OM/skripta.tex" "d:/Documents and projects/Latex/OM/skripta.pdf" "skripta" 1595080605
+["pdflatex"] 1595117430 "d:/Documents and projects/Latex/OM/skripta.tex" "d:/Documents and projects/Latex/OM/skripta.pdf" "skripta" 1595117432
   "c:/Users/Jure/.texlive2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1591731240 2434812 66789e619822436ef537c9f1fb179c3c ""
   "c:/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1591559775 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "c:/texlive/2020/texmf-dist/fonts/map/fontname/texfonts.map" 1591561237 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -100,13 +100,13 @@
   "c:/texlive/2020/texmf-dist/tex/latex/tools/multicol.sty" 1591566312 31532 04852e45d7c17cb384689d2f83b628d3 ""
   "c:/texlive/2020/texmf-dist/web2c/texmf.cnf" 1591562407 39451 60d7debd9ef8ece44cbe965493576c2d ""
   "c:/texlive/2020/texmf.cnf" 1591567137 673 4ae7b2f49cee444c5343a45b5d0f169c ""
-  "d:/Documents and projects/Latex/OM/skripta.aux" 1595080605 4326 99366a94ae9fb206995176d43948df16 ""
-  "d:/Documents and projects/Latex/OM/skripta.tex" 1595080599 97579 2e8d016bc830398211890955b1a97228 ""
-  "skripta.aux" 1595080605 4326 99366a94ae9fb206995176d43948df16 "pdflatex"
-  "skripta.tex" 1595080599 97579 2e8d016bc830398211890955b1a97228 ""
+  "d:/Documents and projects/Latex/OM/skripta.aux" 1595117432 4436 c14a3f2496b2df280ebd28a1584ff588 ""
+  "d:/Documents and projects/Latex/OM/skripta.tex" 1595117427 103733 ab61d3134bccbbe6f76725095b6209a4 ""
+  "skripta.aux" 1595117432 4436 c14a3f2496b2df280ebd28a1584ff588 "pdflatex"
+  "skripta.tex" 1595117427 103733 ab61d3134bccbbe6f76725095b6209a4 ""
   (generated)
-  "d:/Documents and projects/Latex/OM/skripta.pdf"
-  "skripta.aux"
-  "skripta.pdf"
-  "skripta.log"
   "d:/Documents and projects/Latex/OM/skripta.log"
+  "skripta.pdf"
+  "skripta.aux"
+  "d:/Documents and projects/Latex/OM/skripta.pdf"
+  "skripta.log"
